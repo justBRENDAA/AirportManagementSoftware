@@ -20,6 +20,7 @@ int main() {
     // DISPLAY MENU BASED ON USER TYPE
     UserInterface::displayMainMenu(userType);
 
+    
     return 0;
 }
 
