@@ -13,6 +13,7 @@ Login::~Login() {
     disconnectDatabase();  // destructor deletes connection
 }
 
+// this method is called when object is created in main function
 void Login::connectToDatabase() {
     try {
         // get the MySQL PASSWORD from environment variable using _dupenv_s

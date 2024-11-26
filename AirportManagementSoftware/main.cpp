@@ -17,9 +17,14 @@ int main() {
     // attempt login using Login class
     if (login.login(username, password)) {
         ui.displaySuccessfulLogin();  // display success message if login works
+        // call ui to display options based on user_type form mysql database
     }
     else {
         ui.displayUnsuccessfulLogin();  // display failure message if login fails
+        // give 3 options 
+        // login again would call again the login method from login 
+        // register. would call the method we made for registration under login
+        // exit program
     }
   
     return 0;
