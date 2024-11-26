@@ -15,23 +15,23 @@
 */
 
 
-#ifndef LOGIN_H
-#define LOGIN_H
+//#ifndef LOGIN_H
+//#define LOGIN_H
 
-#include <iostream>
-#include <string>
-using namespace std;
+//#include <iostream>
+//#include <string>
+//using namespace std;
 
-class LOGIN {
+//class LOGIN {
 
-private:
-	string username;
-	string password;
+//private:
+//	string username;
+//	string password;
 
-public:
+//public:
 
 
 
-};
+//};
 
-#endif 
+//#endif 
