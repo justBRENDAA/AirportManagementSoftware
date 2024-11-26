@@ -1,37 +1,42 @@
-//  << control class >>
-//     Log - In
+#ifndef LOGIN_H
+#define LOGIN_H
 
-/*
-- username : string
-- password : string
-+ createAccount(username : String; password: String) : boolean
-+ login(username : String; password: String) : boolean
-+ clockIn(username : String; password: String) : boolean
-+ deleteAccount(username : String) : boolean
-+ logout() : void
-+ registerNewUser(userData : string) : boolean
-+ obtainInput() : void
+#include <string>
+#include <mysql_driver.h>
+#include <mysql_connection.h>
 
-*/
+class Login {
+public:
+    // Constructor
+    Login();
 
+    // Method to handle login logic
+    bool login(const std::string& username, const std::string& password);
 
-//#ifndef LOGIN_H
-//#define LOGIN_H
-
-//#include <iostream>
-//#include <string>
-//using namespace std;
-
-//class LOGIN {
-
-//private:
-//	string username;
-//	string password;
-
-//public:
+    // ***NEEDS TO BE IMPLEMENTED INTO MAIN FUNCITON***
+    // -------------------------------------------------
+    // Method to create an account 
+    bool createAccount(const std::string& username, const std::string& password, const std::string& email);
 
 
+    // ***NEEDS TO BE IMPLEMENTED INTO MAIN FUNCITON***
+    // -------------------------------------------------
+    // Method to delete an account
+    bool deleteAccount(const std::string& username);
 
-//};
+    // Destructor
+    ~Login();
 
-//#endif 
+private:
+    // Connect and disconnect from the database
+    void connectToDatabase();
+    void disconnectDatabase();
+
+    // database connection object
+    sql::Connection* con;  // stores the database connection
+
+    std::string username;
+    std::string password;
+};
+
+#endif

@@ -1,40 +1,26 @@
-#include <mysql_driver.h>
-#include <mysql_connection.h>
-#include <cppconn/prepared_statement.h>
 #include <iostream>
-#include <cstdlib>  // for getenv() (windows environment variable)
+#include "Login.h"
+#include "UserInterface.h"
 
 int main() {
-    try {
-        // Get the password from the environment variable securely
-        char* password = nullptr;
-        size_t length = 0;
-        if (_dupenv_s(&password, &length, "MYSQL_PASSWORD") != 0 || password == nullptr) {
-            std::cerr << "Error: MYSQL_PASSWORD environment variable not set!" << std::endl;
-            return 1;
-        }
+    Login login;  // create a Login object to handle login operations
+    UserInterface ui;  // create a UserInterface object to handle displaying prompts and collecting input
 
-        // used to create a MySQL driver instance
-        sql::mysql::MySQL_Driver* driver;
-        sql::Connection* con;
+    // display login screen
+    ui.displayLoginScreen();
+ 
+    // get username and password from UserInterface
+    std::string username = ui.getUsernameInput();
+    std::string password = ui.getPasswordInput();
 
-        driver = sql::mysql::get_mysql_driver_instance();
-        con = driver->connect("tcp://127.0.0.1:3306", "root", password);  // Use the password from the env variable
-        
-        //  connect("host name", "username", "password") 
-        // tcp                     bc mysql uses tcp protocol to send and receive data over the network
-        // 127.0.0.1 (localhost)   standard address for connecting mysql on personal machine (local computer)
-        // 3306                    default port fo mysql (unless configured to use another port)
-        
-        
-        // Print a success message if connected
-        std::cout << "Connected to MySQL database!" << std::endl;
 
-        delete con;  // close connection
-        free(password); // free memory allocated by _dupenv_s
+    // attempt login using Login class
+    if (login.login(username, password)) {
+        ui.displaySuccessfulLogin();  // display success message if login works
     }
-    catch (sql::SQLException& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+    else {
+        ui.displayUnsuccessfulLogin();  // display failure message if login fails
     }
+  
     return 0;
 }
