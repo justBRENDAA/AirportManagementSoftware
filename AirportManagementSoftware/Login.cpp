@@ -144,7 +144,7 @@ bool Login::createAccount(const std::string& inputUsername, const std::string& i
         pstmt->setString(1, inputUsername);
         pstmt->setString(2, inputPassword);  // Store the password hash or plain password based on your security design
         pstmt->setString(3, inputPhoneNum);
-        pstmt->setString(3, inputEmail);
+        pstmt->setString(4, inputEmail);
 
         pstmt->executeUpdate();
 
