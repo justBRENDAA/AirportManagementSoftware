@@ -17,6 +17,7 @@ private:
     std::string username;
     std::string password;
     std::string user_type;
+    std::string first_name;
 
 public:
     // Constructor
@@ -29,6 +30,9 @@ public:
 
     void setUserType(const std::string& type); // setter for user_type
     std::string getUserType() const;           // getter for user_type. will be used to display appropriate options after login!
+
+    void setUserFirstName(const std::string& type); // setter for user_type
+    std::string getUserFirstName() const;           // getter for user_type. will be used to display appropriate options after login!
 
     // Destructor
     ~Login();

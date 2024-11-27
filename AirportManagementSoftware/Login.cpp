@@ -52,7 +52,7 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
 
     try {
         sql::PreparedStatement* pstmt = con->prepareStatement(
-            "SELECT password_hash FROM Users WHERE username = ?"
+            "SELECT first_name, user_type, password_hash FROM Users WHERE username = ?"
         );
         pstmt->setString(1, inputUsername);
         sql::ResultSet* res = pstmt->executeQuery();
@@ -62,6 +62,7 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
 
             if (inputPassword == storedPasswordHash) {
                 setUserType(res->getString("user_type"));
+                setUserFirstName(res->getString("first_name"));
                 delete res;
                 delete pstmt;
                 return true;
@@ -135,4 +136,14 @@ void Login::setUserType(const std::string& type)
 std::string Login::getUserType() const
 {
     return user_type;
+}
+
+void Login::setUserFirstName(const std::string& name)
+{
+    first_name = name;
+}
+
+std::string Login::getUserFirstName() const
+{
+    return first_name;
 }
