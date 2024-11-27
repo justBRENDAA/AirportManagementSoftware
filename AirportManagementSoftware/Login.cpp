@@ -131,7 +131,7 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
 
 
 // Create a new account in the database
-bool Login::createAccount(const std::string& inputUsername, const std::string& inputPassword, const std::string& inputEmail) {
+bool Login::createAccount(const std::string& inputUsername, const std::string& inputPassword, const std::string& inputPhoneNum, const std::string& inputEmail) {
     if (con == nullptr) {
         std::cerr << "No active database connection." << std::endl;
         return false;
@@ -139,10 +139,11 @@ bool Login::createAccount(const std::string& inputUsername, const std::string& i
 
     try {
         sql::PreparedStatement* pstmt = con->prepareStatement(
-            "INSERT INTO Users (username, password_hash, email) VALUES (?, ?, ?)"
+            "INSERT INTO Users (username, password_hash, phone_number, email) VALUES (?, ?, ?)"
         );
         pstmt->setString(1, inputUsername);
         pstmt->setString(2, inputPassword);  // Store the password hash or plain password based on your security design
+        pstmt->setString(3, inputPhoneNum);
         pstmt->setString(3, inputEmail);
 
         pstmt->executeUpdate();

@@ -25,7 +25,7 @@ public:
 
     // Method to handle login logic
     bool login(const std::string& username, const std::string& password);
-    bool createAccount(const std::string& username, const std::string& password, const std::string& email);
+    bool createAccount(const std::string& username, const std::string& password, const std::string& phone_num, const std::string& email);
     bool deleteAccount(const std::string& username);
 
     void setUserType(const std::string& type); // setter for user_type
