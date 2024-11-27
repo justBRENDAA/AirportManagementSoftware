@@ -2,6 +2,8 @@
 #include "Login.h"
 #include "UserInterface.h"
 
+void newAccountPrompts(std::string& fn, std::string& ln, std::string& user, std::string& pass, std::string& phone, std::string& email, std::string& passnum);
+
 int main() {
     Login login;       // create a Login object to handle login operations
     UserInterface ui;  // create a UserInterface object to handle displaying prompts and collecting input
@@ -79,27 +81,12 @@ int main() {
                     return main();  // restart the program
                 }
                 else if (choice == 2) { // havent tested my creating account. i actually think we need to make default user_type be Passenger
-                    // create a new account
                     std::string first_name, last_name, username, password, phone_number, email, passport_num;
-                    std::cout << "Enter your first name: ";
-                    std::cin >> first_name;
-                    std::cout << "Enter your last name: ";
-                    std::cin >> last_name;
-                    std::cout << "Enter a new username: ";
-                    std::cin >> username;
-                    std::cout << "Enter a new password: ";
-                    std::cin >> password;
-                    std::cout << "Enter your phone number (format: 1234567890): ";
-                    std::cin >> phone_number;
-                    std::cout << "Enter your email: ";
-                    std::cin >> email;
-                    std::cout << "Enter your passport number: ";
-                    std::cin >> passport_num;
-                    
+                    newAccountPrompts(first_name, last_name, username, password, phone_number, email, passport_num);
 
                     // Call createAccount from Login class to register the user 
                     // (this only creates passenger login. For staff/security admin will add them in the database and provde credentials)
-                    if (login.createAccount(username, password, phone_number, email)) {
+                    if (login.createAccount(username, password, phone_number, email, first_name, last_name, passport_num)) {
                         std::cout << "Account successfully created!" << std::endl;
                     }
                     else {
@@ -118,19 +105,14 @@ int main() {
             break;
         }
         case 2: {
-            // User chose to create a new account
-            std::string username, password, email, phone_number;
-            std::cout << "Enter a new username: ";
-            std::cin >> username;
-            std::cout << "Enter a new password: ";
-            std::cin >> password;
-            std::cout << "Enter your email: ";
-            std::cin >> email;
-            std::cout << "Enter your phone number (format: 1234567890): ";
-            std::cin >> phone_number;
+            // create a new account
+            std::string first_name, last_name, username, password, phone_number, email, passport_num;
+            newAccountPrompts(first_name, last_name, username, password, phone_number, email, passport_num);
 
-            // Call createAccount from Login class to register the user
-            if (login.createAccount(username, password, phone_number, email)) {
+
+            // Call createAccount from Login class to register the user 
+            // (this only creates passenger login. For staff/security admin will add them in the database and provde credentials)
+            if (login.createAccount(username, password, phone_number, email, first_name, last_name, passport_num)) {
                 std::cout << "Account successfully created!" << std::endl;
             }
             else {
@@ -150,4 +132,21 @@ int main() {
     
 
     return 0;
+}
+
+void newAccountPrompts(std::string& fn, std::string& ln, std::string& user, std::string& pass, std::string& phone, std::string& email, std::string& passnum) {
+    std::cout << "Enter your first name: ";
+    std::cin >> fn;
+    std::cout << "Enter your last name: ";
+    std::cin >> ln;
+    std::cout << "Enter a new username: ";
+    std::cin >> user;
+    std::cout << "Enter a new password: ";
+    std::cin >> pass;
+    std::cout << "Enter your phone number (format: 1234567890): ";
+    std::cin >> phone;
+    std::cout << "Enter your email: ";
+    std::cin >> email;
+    std::cout << "Enter your passport number: ";
+    std::cin >> passnum;
 }
