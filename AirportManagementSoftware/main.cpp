@@ -80,17 +80,23 @@ int main() {
                 }
                 else if (choice == 2) { // havent tested my creating account. i actually think we need to make default user_type be Passenger
                     // create a new account
-                    std::string username, password, email, phone_number;
+                    std::string first_name, last_name, username, password, phone_number, email;
+                    std::cout << "Enter your first name: ";
+                    std::cin >> first_name;
+                    std::cout << "Enter your last name: ";
+                    std::cin >> last_name;
                     std::cout << "Enter a new username: ";
                     std::cin >> username;
                     std::cout << "Enter a new password: ";
                     std::cin >> password;
-                    std::cout << "Enter your email: ";
-                    std::cin >> email;
                     std::cout << "Enter your phone number (format: 1234567890): ";
                     std::cin >> phone_number;
+                    std::cout << "Enter your email: ";
+                    std::cin >> email;
+                    
 
-                    // Call createAccount from Login class to register the user
+                    // Call createAccount from Login class to register the user 
+                    // (this only creates passenger login. For staff/security admin will add them in the database and provde credentials)
                     if (login.createAccount(username, password, phone_number, email)) {
                         std::cout << "Account successfully created!" << std::endl;
                     }
