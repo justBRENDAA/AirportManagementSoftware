@@ -132,7 +132,8 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
 
 
 // Create a new account in the database
-bool Login::createAccount(const std::string& inputUsername, const std::string& inputPassword, const std::string& inputPhoneNum, const std::string& inputEmail) {
+bool Login::createAccount(const std::string& inputUsername, const std::string& inputPassword, const std::string& inputPhoneNum, const std::string& inputEmail, 
+                          const std::string& inputFirstName, const std::string& inputLastName, const std::string& inputPassportNum) {
     if (con == nullptr) {
         std::cerr << "No active database connection." << std::endl;
         return false;
@@ -149,10 +150,28 @@ bool Login::createAccount(const std::string& inputUsername, const std::string& i
 
         pstmt->executeUpdate();
 
-        // set user_id
-        // insert into passenger
-        delete pstmt;
+        sql::PreparedStatement* pstmtGetID = con->prepareStatement("SELECT LAST_INSERT_ID();");
+        sql::ResultSet* res = pstmtGetID->executeQuery();
+        res->next();  // Move to the result row
+        int user_id = res->getInt(1);  // Retrieve the auto-incremented user_id
 
+        delete pstmtGetID;
+        delete res;
+
+        // insert into passenger table 
+        sql::PreparedStatement* pstmtPassenger = con->prepareStatement(
+            "INSERT INTO Passengers (user_id, first_name, last_name, passport_number) VALUES (?, ?, ?, ?)"
+        );
+        pstmtPassenger->setInt(1, user_id);
+        pstmtPassenger->setString(2, inputFirstName);
+        pstmtPassenger->setString(3, inputLastName);
+        pstmtPassenger->setString(4, inputPassportNum);
+
+        pstmtPassenger->executeUpdate();
+
+        delete pstmtPassenger;
+
+        std::cout << "Account successfully created!" << std::endl;
         return true;
     }
     catch (sql::SQLException& e) {
