@@ -53,7 +53,7 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
     try {
         // First, retrieve the user type and password hash from the Users table
         sql::PreparedStatement* pstmt = con->prepareStatement(
-            "SELECT user_type, password_hash FROM Users WHERE username = ?"
+            "SELECT user_id, user_type, password_hash FROM Users WHERE username = ?"
         );
         pstmt->setString(1, inputUsername);
         sql::ResultSet* res = pstmt->executeQuery();
