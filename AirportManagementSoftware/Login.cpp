@@ -61,6 +61,7 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
         if (res->next()) {
             std::string storedPasswordHash = res->getString("password_hash");
             std::string userType = res->getString("user_type");
+            user_id = res->getInt("user_id");
 
             // Check if the entered password matches the stored hash
             if (inputPassword == storedPasswordHash) {
@@ -139,16 +140,19 @@ bool Login::createAccount(const std::string& inputUsername, const std::string& i
 
     try {
         sql::PreparedStatement* pstmt = con->prepareStatement(
-            "INSERT INTO Users (username, password_hash, phone_number, email) VALUES (?, ?, ?)"
+            "INSERT INTO Users (username, password_hash, phone_number, email) VALUES (?, ?, ?, ?)"
         );
         pstmt->setString(1, inputUsername);
-        pstmt->setString(2, inputPassword);  // Store the password hash or plain password based on your security design
+        pstmt->setString(2, inputPassword);
         pstmt->setString(3, inputPhoneNum);
         pstmt->setString(4, inputEmail);
 
         pstmt->executeUpdate();
 
+        // set user_id
+        // insert into passenger
         delete pstmt;
+
         return true;
     }
     catch (sql::SQLException& e) {

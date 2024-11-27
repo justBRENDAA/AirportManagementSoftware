@@ -80,7 +80,7 @@ int main() {
                 }
                 else if (choice == 2) { // havent tested my creating account. i actually think we need to make default user_type be Passenger
                     // create a new account
-                    std::string first_name, last_name, username, password, phone_number, email;
+                    std::string first_name, last_name, username, password, phone_number, email, passportNum;
                     std::cout << "Enter your first name: ";
                     std::cin >> first_name;
                     std::cout << "Enter your last name: ";

@@ -18,6 +18,7 @@ private:
     std::string password;
     std::string user_type;
     std::string first_name;
+    int user_id;
 
 public:
     // Constructor
