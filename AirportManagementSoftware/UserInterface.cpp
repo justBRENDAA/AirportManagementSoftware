@@ -8,11 +8,11 @@ void UserInterface::displayLoginScreen() {
 }
 
 void UserInterface::displaySuccessfulLogin() {
-    std::cout << "Login successful!" << std::endl;
+    std::cout << "\nLogin successful!" << std::endl;
 }
 
 void UserInterface::displayUnsuccessfulLogin() {
-    std::cout << "Login failed. Please try again." << std::endl;
+    std::cout << "\nLogin failed. Please try again." << std::endl;
 }
 
 std::string UserInterface::getUsernameInput() {
