@@ -6,92 +6,138 @@ int main() {
     Login login;       // create a Login object to handle login operations
     UserInterface ui;  // create a UserInterface object to handle displaying prompts and collecting input
 
-    // display login screen
-    ui.displayLoginScreen();
+    int option;
 
-    // get username and password from UserInterface
-    std::string username = ui.getUsernameInput(); // this function prompts the user to enter username 
-    std::string password = ui.getPasswordInput(); // this function prompts the user to enter password 
+    // Initial menu: Login, Create Account, or Exit
+    
+    std::cout << "Welcome to the system. Choose an option:" << std::endl;
+    std::cout << "1. Login" << std::endl;
+    std::cout << "2. Create a new account" << std::endl;
+    std::cout << "3. Exit the program" << std::endl;
+        
+    std::cin >> option;
+        
+    switch (option) {
+        case 1: {
+            // User chose to login
+            ui.displayLoginScreen();
 
-    // attempt login using Login class
-    if (login.login(username, password)) {
-        ui.displaySuccessfulLogin();  // display success message if login works
+            // get user input on username and password from UserInterface class
+            std::string username = ui.getUsernameInput();
+            std::string password = ui.getPasswordInput();
 
-        // Retrieve and display the user's first name
-        std::string firstName = login.getUserFirstName();
-        std::cout << "Welcome, " << firstName << "!" << std::endl;
+            // attempt login
+            if (login.login(username, password)) {
+                ui.displaySuccessfulLogin();  // Display success message if login works
 
-        // Display options based on the user type
-        std::string userType = login.getUserType();
+                // Retrieve and display the user's first name
+                std::string firstName = login.getUserFirstName();
+                std::cout << "Welcome, " << firstName << "!" << std::endl;
 
+                // Display options based on the user type
+                std::string userType = login.getUserType();
 
-        // OPTIONS DISPLAYED ARE ONLY TEMPORARY. we will call the necessary functions from each class once we create them
-        if (userType == "Passenger") {
-            std::cout << "\nOptions for passengers: " << std::endl;
-            std::cout << "1. Check-In" << std::endl;
-            std::cout << "2. Get Gate Number" << std::endl;
-            std::cout << "3. Locate Luggage" << std::endl;
+                // OPTIONS DISPLAYED ARE ONLY TEMPORARY. We'll call the necessary functions from each class once we create them
+                if (userType == "Passenger") {
+                    std::cout << "\nOptions for passengers: " << std::endl;
+                    std::cout << "1. Check-In" << std::endl;
+                    std::cout << "2. Get Gate Number" << std::endl;
+                    std::cout << "3. Locate Luggage" << std::endl;
+                }
+                else if (userType == "Staff") {
+                    std::cout << "\nOptions for staff: " << std::endl;
+                    std::cout << "1. Assist Passengers" << std::endl;
+                    std::cout << "2. Manage Flights" << std::endl;
+                    std::cout << "3. View Reports" << std::endl;
+                }
+                else if (userType == "Security") {
+                    std::cout << "\nOptions for security: " << std::endl;
+                    std::cout << "1. Enforce Safety" << std::endl;
+                    std::cout << "2. Check Airport" << std::endl;
+                    std::cout << "3. Manage Threats" << std::endl;
+                }
+                else {
+                    std::cout << "Unknown user type." << std::endl; // In case user type is wrong in database
+                }
+            }
+            // if login didnt work
+            else {
+                ui.displayUnsuccessfulLogin();  // display failure message if login does not work
+
+                // Give the user options if login fails
+                std::cout << "Choose an option: " << std::endl;
+                std::cout << "1. Try logging in again" << std::endl;
+                std::cout << "2. Register a new account" << std::endl;
+                std::cout << "3. Exit the program" << std::endl;
+
+                int choice;
+                std::cin >> choice;
+
+                if (choice == 1) {
+                    // Retry login
+                    std::cout << "\nRetrying login..." << std::endl;
+                    return main();  // restart the program
+                }
+                else if (choice == 2) { // havent tested my creating account. i actually think we need to make default user_type be Passenger
+                    // create a new account
+                    std::string username, password, email;
+                    std::cout << "Enter a new username: ";
+                    std::cin >> username;
+                    std::cout << "Enter a new password: ";
+                    std::cin >> password;
+                    std::cout << "Enter your email: ";
+                    std::cin >> email;
+
+                    // Call createAccount from Login class to register the user
+                    if (login.createAccount(username, password, email)) {
+                        std::cout << "Account successfully created!" << std::endl;
+                    }
+                    else {
+                        std::cout << "\nError creating account." << std::endl;
+                    }
+                }
+                else if (choice == 3) {
+                    std::cout << "\nExiting the program." << std::endl;
+                    
+                }
+                else {
+                    std::cout << "Invalid choice. Exiting the program." << std::endl;
+                    return 0;  // Exit the program if invalid choice
+                }
+            }
+            break;
         }
-        else if (userType == "Staff") {
-            std::cout << "\nOptions for staff: " << std::endl;
-            std::cout << "1. Assist Passengers" << std::endl;
-            std::cout << "2. Manage Flights" << std::endl;
-            std::cout << "3. View Reports" << std::endl;
-        }
-        else if (userType == "Security") {
-            std::cout << "\nOptions for security: " << std::endl;
-            std::cout << "1. Enforce Safety" << std::endl;
-            std::cout << "2. Check Airport" << std::endl;
-            std::cout << "3. Manage Threats" << std::endl;
-        }
-        else {
-            std::cout << "Unknown user type." << std::endl; // in case user type is wrong in database
-        }
-
-    }
-    else {
-        ui.displayUnsuccessfulLogin();  // display failure message if login fails
-
-        // Give the user options if login fails
-        std::cout << "Choose an option: " << std::endl;
-        std::cout << "1. Try logging in again" << std::endl;
-        std::cout << "2. Register a new account" << std::endl;
-        std::cout << "3. Exit the program" << std::endl;
-
-        int choice;
-        std::cin >> choice;
-
-        if (choice == 1) {
-            // Call the login process again
-            std::cout << "\nRetrying login..." << std::endl;
-            return main();  // restart the login process
-        }
-        else if (choice == 2) {
-            std::string username, password, email;
+        case 2: {
+            // User chose to create a new account
+            std::string username, password, email, phone_number;
             std::cout << "Enter a new username: ";
             std::cin >> username;
             std::cout << "Enter a new password: ";
             std::cin >> password;
             std::cout << "Enter your email: ";
             std::cin >> email;
+            std::cout << "Enter your phone number (format: 1234567890): ";
+            std::cin >> phone_number;
 
             // Call createAccount from Login class to register the user
-            if (login.createAccount(username, password, email)) {
+            if (login.createAccount(username, password, phone_number, email)) {
                 std::cout << "Account successfully created!" << std::endl;
             }
             else {
                 std::cout << "\nError creating account." << std::endl;
             }
+            break;
         }
-        else if (choice == 3) {
+        case 3: {
             std::cout << "\nExiting the program." << std::endl;
-            return 0;  // exit the program
+            break;
         }
-        else {
-            std::cout << "Invalid choice. Exiting the program." << std::endl;
-            return 0;  // Exit the program if invalid choice
+        default: {
+            std::cout << "Invalid choice. Please choose again." << std::endl;
+            break;
         }
     }
+    
 
     return 0;
 }
