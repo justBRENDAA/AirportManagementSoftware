@@ -61,6 +61,7 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
             std::string storedPasswordHash = res->getString("password_hash");
 
             if (inputPassword == storedPasswordHash) {
+                setUserType(res->getString("user_type"));
                 delete res;
                 delete pstmt;
                 return true;
@@ -124,4 +125,14 @@ bool Login::deleteAccount(const std::string& inputUsername) {
         std::cerr << "Error during account deletion: " << e.what() << std::endl;
         return false;
     }
+}
+
+void Login::setUserType(const std::string& type)
+{
+    user_type = type;
+}
+
+std::string Login::getUserType() const
+{
+    return user_type;
 }

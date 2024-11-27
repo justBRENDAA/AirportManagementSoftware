@@ -6,27 +6,6 @@
 #include <mysql_connection.h>
 
 class Login {
-public:
-    // Constructor
-    Login();
-
-    // Method to handle login logic
-    bool login(const std::string& username, const std::string& password);
-
-    // ***NEEDS TO BE IMPLEMENTED INTO MAIN FUNCITON***
-    // -------------------------------------------------
-    // Method to create an account 
-    bool createAccount(const std::string& username, const std::string& password, const std::string& email);
-
-
-    // ***NEEDS TO BE IMPLEMENTED INTO MAIN FUNCITON***
-    // -------------------------------------------------
-    // Method to delete an account
-    bool deleteAccount(const std::string& username);
-
-    // Destructor
-    ~Login();
-
 private:
     // Connect and disconnect from the database
     void connectToDatabase();
@@ -37,6 +16,24 @@ private:
 
     std::string username;
     std::string password;
+    std::string user_type;
+
+public:
+    // Constructor
+    Login();
+
+    // Method to handle login logic
+    bool login(const std::string& username, const std::string& password);
+    bool createAccount(const std::string& username, const std::string& password, const std::string& email);
+    bool deleteAccount(const std::string& username);
+
+    void setUserType(const std::string& type); // setter for user_type
+    std::string getUserType() const;           // getter for user_type. will be used to display appropriate options after login!
+
+    // Destructor
+    ~Login();
+
+
 };
 
 #endif
