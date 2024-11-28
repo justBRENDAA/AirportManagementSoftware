@@ -25,7 +25,7 @@ private:
 
     void setUserType(const std::string& type); // setter for user_type
     void setUserFirstName(const std::string& type); // setter for user_type
-    void setUserID(const std::string& type); // setter for user_type
+    void setUserID(const int& id); // setter for user_type
 
 public:
     // Constructor
@@ -42,7 +42,7 @@ public:
     // getter functions
     std::string getUserType() const;           
     std::string getUserFirstName() const;             
-    std::string getUserID() const;           
+    int getUserID() const;           
 
     // Destructor
     ~Login();

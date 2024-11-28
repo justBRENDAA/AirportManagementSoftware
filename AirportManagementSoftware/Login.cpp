@@ -63,19 +63,18 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
 
         if (res->next()) {
             std::string dbPassword = res->getString("password_hash");  // pulls password from db and store in local variable
-            setUserType(res->getString("user_type"));                          // pulls user type from db and stores in local variable
-            user_id = res->getInt("user_id");                                  // pulls user id from db and stores in local variable
+            setUserType(res->getString("user_type"));                  // pulls user type from db and stores in private variable
+            setUserID(res->getInt("user_id"));                         // pulls user id from db and stores in private variable
 
             // Check if the entered password matches the stored hash
             if (password == dbPassword) {
 
                 // based on user type, get the first name from the appropriate table
                 if (user_type == "Passenger") {
-                    pstmt->setString(1, inputUsername);
                     sql::PreparedStatement* pstmtPassenger = con->prepareStatement(
-                        "SELECT p.first_name FROM Passengers p "
-                        "JOIN Users u ON u.user_id = p.user_id "
-                        "WHERE u.username = ?"
+                        "SELECT p.first_name FROM Passengers p "           // this join allows us to select first name from db
+                        "JOIN Users u ON u.user_id = p.user_id "           // using the user id where based on username 
+                        "WHERE u.username = ?"                             // connects the passangers and users table
                     );
                     pstmtPassenger->setString(1, inputUsername);
                     sql::ResultSet* resPassenger = pstmtPassenger->executeQuery();
@@ -86,10 +85,9 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
                     delete pstmtPassenger;
                 }
                 else if (user_type == "Staff") {
-                    pstmt->setString(1, inputUsername);
                     sql::PreparedStatement* pstmtStaff = con->prepareStatement(
-                        "SELECT s.first_name FROM Staff s "
-                        "JOIN Users u ON u.user_id = s.user_id "
+                        "SELECT s.first_name FROM Staff s "                      // this join connects the users and staff table
+                        "JOIN Users u ON u.user_id = s.user_id "                 // connects through username and user_id
                         "WHERE u.username = ?"
                     );
                     pstmtStaff->setString(1, inputUsername);
@@ -101,10 +99,9 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
                     delete pstmtStaff;
                 }
                 else if (user_type == "Security") {
-                    pstmt->setString(1, inputUsername);
                     sql::PreparedStatement* pstmtSecurity = con->prepareStatement(
-                        "SELECT sec.name FROM Security sec "
-                        "JOIN Users u ON u.user_id = sec.user_id "
+                        "SELECT sec.name FROM Security sec "                         // this connects users table and security table
+                        "JOIN Users u ON u.user_id = sec.user_id "                   // uses username and user_id to establish connection
                         "WHERE u.username = ?"
                     );
                     pstmtSecurity->setString(1, inputUsername);
@@ -230,12 +227,12 @@ std::string Login::getUserFirstName() const
     return first_name;
 }
 
-void Login::setUserID(const std::string& id)
+void Login::setUserID(const int& id)
 {
     user_id = id;
 }
 
-std::string Login::getUserID() const
+int Login::getUserID() const
 {
     return user_id;
 }
