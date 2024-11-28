@@ -153,7 +153,7 @@ bool Login::createAccount(const std::string& inputUsername, const std::string& i
         sql::PreparedStatement* pstmtGetID = con->prepareStatement("SELECT LAST_INSERT_ID();");
         sql::ResultSet* res = pstmtGetID->executeQuery();
         res->next();  // move to the result row
-        int user_id = res->getInt(1);  // Retrieve the auto-incremented user_id
+        int user_id = res->getInt(1);  // retrieve the user_id (auto-incremented)
 
         delete pstmtGetID;
         delete res;
@@ -171,7 +171,9 @@ bool Login::createAccount(const std::string& inputUsername, const std::string& i
 
         delete pstmtPassenger;
 
-        std::cout << "Account successfully created!" << std::endl;
+        // successfull creation message in main function
+        // std::cout << "Account successfully created!" << std::endl;
+
         return true;
     }
     catch (sql::SQLException& e) {
