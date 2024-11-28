@@ -59,7 +59,7 @@ int main() {
                     std::cout << "3. Manage Threats" << std::endl;
                 }
                 else {
-                    std::cout << "Unknown user type." << std::endl; // In case user type is wrong in database
+                    std::cout << "Unknown user type." << std::endl; // in case user type is wrong in database
                 }
             }
             // if login didnt work
