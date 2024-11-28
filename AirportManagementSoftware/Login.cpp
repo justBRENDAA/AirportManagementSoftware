@@ -141,14 +141,17 @@ bool Login::createAccount(const std::string& inputUsername, const std::string& i
 
     try {
         sql::PreparedStatement* pstmt = con->prepareStatement(
-            "INSERT INTO Users (username, password_hash, phone_number, email) VALUES (?, ?, ?, ?)"
+            "INSERT INTO Users (username, password_hash, phone_number, email, user_type) VALUES (?, ?, ?, ?, ?)"
         );
         pstmt->setString(1, inputUsername);
         pstmt->setString(2, inputPassword);
         pstmt->setString(3, inputPhoneNum);
         pstmt->setString(4, inputEmail);
+        pstmt->setString(5, "Passenger");
 
         pstmt->executeUpdate();
+
+        delete pstmt;
 
         sql::PreparedStatement* pstmtGetID = con->prepareStatement("SELECT LAST_INSERT_ID();");
         sql::ResultSet* res = pstmtGetID->executeQuery();
