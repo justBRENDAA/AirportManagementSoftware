@@ -134,12 +134,14 @@
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="Luggage.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Passenger.cpp" />
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flight.h" />
     <ClInclude Include="Login.h" />
     <ClInclude Include="Luggage.h" />
+    <ClInclude Include="Passenger.h" />
     <ClInclude Include="UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -152,7 +152,7 @@ bool Login::createAccount(const std::string& inputUsername, const std::string& i
 
         sql::PreparedStatement* pstmtGetID = con->prepareStatement("SELECT LAST_INSERT_ID();");
         sql::ResultSet* res = pstmtGetID->executeQuery();
-        res->next();  // Move to the result row
+        res->next();  // move to the result row
         int user_id = res->getInt(1);  // Retrieve the auto-incremented user_id
 
         delete pstmtGetID;

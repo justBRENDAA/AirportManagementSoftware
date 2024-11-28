@@ -40,8 +40,6 @@ public:
 
     // Destructor
     ~Login();
-
-
 };
 
 #endif
