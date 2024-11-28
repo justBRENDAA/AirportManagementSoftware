@@ -49,22 +49,21 @@ void Passenger::disconnectDatabase() {
 
 void Passenger::displayOptions()
 {
-    do {
-        std::cout << "\nPASSENGER OPTIONS: " << std::endl;
-        std::cout << "=====================" << std::endl;
-        std::cout << "1. Check-In" << std::endl;
-        std::cout << "2. Get Gate Number" << std::endl;
-        std::cout << "3. Locate Luggage" << std::endl;
+    
+    std::cout << "\nPASSENGER OPTIONS: " << std::endl;
+    std::cout << "=====================" << std::endl;
+    std::cout << "1. Check-In" << std::endl;
+    std::cout << "2. Get Gate Number" << std::endl;
+    std::cout << "3. Locate Luggage" << std::endl;
 
-        int selection;
+    int selection;
+
+    do {
         std::cin >> selection;
         setChoice(selection);
 
-        if (getChoice() == -1) {
-            std::cout << "Please select a valid option (1-3): ";
-            std::cin >> selection;
-            setChoice(selection);
-        }
+        if (getChoice() == -1)
+            std::cout << "Please select a valid option(1-3): ";
     } while (getChoice() == -1);
 }
 
