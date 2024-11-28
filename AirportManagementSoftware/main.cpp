@@ -44,6 +44,8 @@ int main() {
                 if (userType == "Passenger") {
                     Passenger p;
                     p.displayOptions();
+                    int userSelection = p.getChoice();
+                    std::cout << "user choice: " << userSelection;
                 }
                 else if (userType == "Staff") {
                     std::cout << "\nOptions for staff: " << std::endl;
@@ -103,6 +105,7 @@ int main() {
             }
             break;
         }
+        // create new account
         case 2: {
             // create a new account
             std::string first_name, last_name, username, password, phone_number, email, passport_num;
@@ -119,17 +122,18 @@ int main() {
             }
             break;
         }
+        // exit the program
         case 3: {
             std::cout << "\nExiting the program." << std::endl;
             break;
         }
+        // invalid choice
         default: {
             std::cout << "Invalid choice. Please choose again." << std::endl;
             break;
         }
     }
-    
-
+   
     return 0;
 }
 
