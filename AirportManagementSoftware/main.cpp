@@ -44,8 +44,7 @@ int main() {
                 if (userType == "Passenger") {
                     Passenger p;
                     p.displayOptions();
-                    int userSelection = p.getChoice();
-                    std::cout << "user choice: " << userSelection;
+                    
                 }
                 else if (userType == "Staff") {
                     std::cout << "\nOptions for staff: " << std::endl;

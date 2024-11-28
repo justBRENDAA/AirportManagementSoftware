@@ -31,7 +31,9 @@ public:
     Passenger();
 
     void displayOptions();
-    
+    void checkFlightInformation();
+    void locateLuggage();
+    void requestSupport();
 
     // getters
     int getChoice() const;
