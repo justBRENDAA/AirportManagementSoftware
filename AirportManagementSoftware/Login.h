@@ -20,6 +20,13 @@ private:
     std::string first_name;
     int user_id;
 
+    // setter functions
+    // private because they should not be changed after object creation
+
+    void setUserType(const std::string& type); // setter for user_type
+    void setUserFirstName(const std::string& type); // setter for user_type
+    void setUserID(const std::string& type); // setter for user_type
+
 public:
     // Constructor
     Login();
@@ -32,11 +39,10 @@ public:
     
     bool deleteAccount(const std::string& username);
    
-    void setUserType(const std::string& type); // setter for user_type
-    std::string getUserType() const;           // getter for user_type. will be used to display appropriate options after login!
-
-    void setUserFirstName(const std::string& type); // setter for user_type
-    std::string getUserFirstName() const;           // getter for user_type. will be used to display appropriate options after login!
+    // getter functions
+    std::string getUserType() const;           
+    std::string getUserFirstName() const;             
+    std::string getUserID() const;           
 
     // Destructor
     ~Login();
