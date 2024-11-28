@@ -19,13 +19,23 @@ private:
     std::string password;
     std::string user_type;
     std::string first_name;
+    int choice;
     int user_id;
+
+    //setters
+    void setChoice(const int& choice);
+
 
 public:
     // Constructor
     Passenger();
 
+    void displayOptions();
     
+
+    // getters
+    int getChoice() const;
+
 
     // Destructor
     ~Passenger();

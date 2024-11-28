@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Login.h"
 #include "UserInterface.h"
+#include "Passenger.h"
 
 void newAccountPrompts(std::string& fn, std::string& ln, std::string& user, std::string& pass, std::string& phone, std::string& email, std::string& passnum);
 
@@ -41,10 +42,8 @@ int main() {
 
                 // OPTIONS DISPLAYED ARE ONLY TEMPORARY. We'll call the necessary functions from each class once we create them
                 if (userType == "Passenger") {
-                    std::cout << "\nOptions for passengers: " << std::endl;
-                    std::cout << "1. Check-In" << std::endl;
-                    std::cout << "2. Get Gate Number" << std::endl;
-                    std::cout << "3. Locate Luggage" << std::endl;
+                    Passenger p;
+                    p.displayOptions();
                 }
                 else if (userType == "Staff") {
                     std::cout << "\nOptions for staff: " << std::endl;

@@ -5,9 +5,11 @@
 #include <cstdlib>  // for std::getenv
 #include <cstring>  // for std::strlen
 
+
 Passenger::Passenger() {
     connectToDatabase();  // establishes the connection as soon as Login object is instantiated
 }
+
 
 Passenger::~Passenger() {
     disconnectDatabase();  // destructor deletes connection
@@ -42,4 +44,40 @@ void Passenger::disconnectDatabase() {
         delete con;  // delete the connection object to clean up
         con = nullptr;
     }
+}
+
+
+void Passenger::displayOptions()
+{
+    do {
+        std::cout << "\nPASSENGER OPTIONS: " << std::endl;
+        std::cout << "=====================" << std::endl;
+        std::cout << "1. Check-In" << std::endl;
+        std::cout << "2. Get Gate Number" << std::endl;
+        std::cout << "3. Locate Luggage" << std::endl;
+
+        int selection;
+        std::cin >> selection;
+        setChoice(selection);
+
+        if (getChoice() == -1) {
+            std::cout << "Please select a valid option (1-3): ";
+            std::cin >> selection;
+            setChoice(selection);
+        }
+    } while (getChoice() == -1);
+}
+
+
+void Passenger::setChoice(const int& c)
+{
+    if (c >= 1 && c <= 3)
+        choice = c;
+    else
+        choice = -1;
+}
+
+int Passenger::getChoice() const
+{
+    return choice;
 }
