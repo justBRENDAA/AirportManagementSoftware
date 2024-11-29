@@ -10,36 +10,43 @@ SupportRequests::SupportRequests(sql::Connection* existingCon, std::string user)
 	username = username;
 }
 
+// method called by users to send a support request
 void SupportRequests::insertRequest()
 {
-    std::string supportRequestDescription;
-    std::cin.ignore();
-    std::cout << "Please enter a description of your request below: \n";
-    std::getline(std::cin, supportRequestDescription);
+    try{
+        std::cin.ignore();
+        std::cout << "Please enter a description of the support request below: \n";
+        std::getline(std::cin, supportRequestDescription);
 
-    sql::PreparedStatement* pstmt = con->prepareStatement(
-        "SELECT p.passenger_id "
-        "FROM Users u "
-        "JOIN Passengers p ON u.user_id = p.user_id "
-        "WHERE u.username = ?"
-    );
+        sql::PreparedStatement* pstmt = con->prepareStatement(
+            "SELECT p.passenger_id "
+            "FROM Users u "                                // get passenger id from passengers table
+            "JOIN Passengers p ON u.user_id = p.user_id "  // by joining it through user table 
+            "WHERE u.username = ?"                         // with username
+        );
 
-    pstmt->setString(1, username);
+        pstmt->setString(1, username);                     // set username as the ? 
 
-    sql::ResultSet* res = pstmt->executeQuery();
+        sql::ResultSet* res = pstmt->executeQuery();       // execute the query
 
-    if (res->next()) {
-        pass_id = res->getInt("passenger_id");
+        if (res->next()) {
+            pass_id = res->getInt("passenger_id");         // store obrained id in private variable
+        }
+
+        sql::PreparedStatement* support_pstmt = con->prepareStatement(               // query inserts into 
+            "INSERT INTO Supportrequests (passenger_id, description) VALUES (?, ?)"  // support request table
+        );
+        support_pstmt->setInt(1, pass_id);                         // set the passenger id as first ? 
+        support_pstmt->setString(2, supportRequestDescription);    // set the descriptio as the second ? 
+
+        support_pstmt->executeUpdate();                            // execute the query
+
+        delete pstmt;                                              // delete pointers
+        delete support_pstmt;
+
+        std::cout << "\nRequest has been sent.";
     }
-
-    sql::PreparedStatement* support_pstmt = con->prepareStatement(
-        "INSERT INTO Supportrequests (passenger_id, description) VALUES (?, ?)"
-    );
-    support_pstmt->setInt(1, pass_id);
-    support_pstmt->setString(2, supportRequestDescription);
-
-    support_pstmt->executeUpdate();
-
-    delete pstmt;
-    delete support_pstmt;
+    catch (sql::SQLException& e) {
+        std::cerr << "Error sending support request: " << e.what() << std::endl;
+    }
 }

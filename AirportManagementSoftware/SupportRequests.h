@@ -7,9 +7,10 @@
 
 class SupportRequests {
 private:
-	sql::Connection* con;
-	std::string username;
-	int pass_id;
+	sql::Connection* con = nullptr;
+	std::string username = "";
+	std::string supportRequestDescription = "";
+	int pass_id = -1;
 
 public:
 	SupportRequests(sql::Connection* con, std::string user);

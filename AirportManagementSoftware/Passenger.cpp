@@ -120,7 +120,7 @@ void Passenger::requestSupport()
             delete pstmt;
             delete support_pstmt;
 
-            std::cout << "\nRequest has been sent.\Support staff will contact you via email.";
+            std::cout << "\nSupport staff will contact you via email.";
     }catch (sql::SQLException& e) {
         std::cerr << "Error sending support request: " << e.what() << std::endl;
     }
