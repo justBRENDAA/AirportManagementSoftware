@@ -11,56 +11,20 @@ Flight::Flight(sql::Connection* existingCon, std::string user)
 
 void Flight::displayInfo()
 {
-    std::cout << "in flight display info\n";
-    sql::PreparedStatement* user_pstmt = con->prepareStatement(
-        "SELECT user_id FROM Users WHERE username = ?"
+    std::cout << "In Flight Display Info\n";
+
+    sql::PreparedStatement* pstmt = con->prepareStatement(
+        "SELECT f.flight_number, f.departure_time, f.arrival_time, "
+        "f.origin_airport_id, f.destination_airport_id, f.capacity "
+        "FROM Flights f "
+        "JOIN PassengerFlight pf ON f.flight_id = pf.flight_id "
+        "JOIN Passengers p ON pf.passenger_id = p.passenger_id "
+        "JOIN Users u ON p.user_id = u.user_id "
+        "WHERE u.username = ?"
     );
-    user_pstmt->setString(1, username);
+    pstmt->setString(1, username);
 
-    sql::ResultSet* resUser = user_pstmt->executeQuery();
-
-    if (resUser->next()) {
-        user_id = resUser->getInt("user_id");
-    }
-
-    delete resUser;
-    delete user_pstmt;
-
-    sql::PreparedStatement* pass_pstmt = con->prepareStatement(
-        "SELECT passenger_id FROM Passengers WHERE user_id = ?"
-    );
-    pass_pstmt->setInt(1, user_id);
-
-    sql::ResultSet* resPass = pass_pstmt->executeQuery();
-
-    if (resPass->next()) {
-        passenger_id = resPass->getInt("passenger_id");
-    }
-
-    delete resPass;
-    delete pass_pstmt;
-
-    sql::PreparedStatement* pass_flight_pstmt = con->prepareStatement(
-        "SELECT flight_id FROM Passengerflight WHERE user_id = ?"
-    );
-    pass_flight_pstmt->setInt(1, user_id);
-
-    sql::ResultSet* resPassFlight = pass_flight_pstmt->executeQuery();
-
-    if (resPass->next()) {
-        flight_id = resPassFlight->getInt("flight_id");
-    }
-
-    delete resPassFlight;
-    delete pass_flight_pstmt;
-
-    sql::PreparedStatement* flight_pstmt = con->prepareStatement(
-        "SELECT flight_number, departure_time, arrival_time, origin_airport_id, destination_airport_id, capacity FROM Flight WHERE flight_id = ?"
-    );
-    flight_pstmt->setInt(1, flight_id);
-
-    sql::ResultSet* resFlight = flight_pstmt->executeQuery();
-
+    sql::ResultSet* resFlight = pstmt->executeQuery();
     if (resFlight->next()) {
         flight_number = resFlight->getString("flight_number");
         departure_time = resFlight->getString("departure_time");
@@ -71,16 +35,14 @@ void Flight::displayInfo()
     }
 
     delete resFlight;
-    delete flight_pstmt;
+    delete pstmt;
 
-    std::cout << "\n LUGGAGE INFORMATION\n";
+    std::cout << "\n FLIGHT INFORMATION\n";
     std::cout << "========================\n";
-    std::cout << "Flight number      :    " << flight_number << std::endl;
-    std::cout << "Departure Info     :  " << departure_time << std::endl;
-    std::cout << "Arrival Info       :     " << arrival_time << std::endl;
+    std::cout << "Flight number      : " << flight_number << std::endl;
+    std::cout << "Departure Info     : " << departure_time << std::endl;
+    std::cout << "Arrival Info       : " << arrival_time << std::endl;
     std::cout << "Origin Airport     : " << origin_airport_id << std::endl;
     std::cout << "Destination Airport: " << destination_airport_id << std::endl;
     std::cout << "Capacity           : " << capacity << std::endl;
-
-    std::cout << "\nFor information regarding exact luggage location\nvisit our Luggage Kiosk and enter the luggage ID";
 }
