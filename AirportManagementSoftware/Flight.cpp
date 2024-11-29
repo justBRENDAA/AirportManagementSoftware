@@ -46,5 +46,5 @@ void Flight::displayInfo()
     std::cout << "Arrival Info       : " << arrival_time << std::endl;
     std::cout << "Origin Airport     : " << origin_airport_name << std::endl;
     std::cout << "Destination Airport: " << destination_airport_name << std::endl;
-    std::cout << "Capacity           : " << capacity << std::endl;
+    std::cout << "Flight Capacity    : " << capacity << std::endl;
 }
