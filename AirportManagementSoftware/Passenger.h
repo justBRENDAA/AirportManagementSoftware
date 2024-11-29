@@ -24,7 +24,7 @@ private:
 
 public:
     // Constructor
-    Passenger();
+    Passenger(sql::Connection* existingCon);
 
     void displayOptions();
     void checkFlightInformation();
