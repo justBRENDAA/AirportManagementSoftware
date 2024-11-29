@@ -1,5 +1,6 @@
 #include "Passenger.h"
 #include "Luggage.h"
+#include "Flight.h"
 #include <cppconn/prepared_statement.h>
 #include <cppconn/resultset.h>
 #include <iostream>
@@ -55,9 +56,9 @@ void Passenger::handleChoice(int c)
 
 void Passenger::checkFlightInformation()
 {
-    // first check if user has a ticket
-    // since program does not support the purchase of tickets
-    // message will direct them to the purchase desk with airport staff
+    Flight flight(con, username);
+    flight.displayInfo();
+    std::cout << "\nFlight info displayed successfully)";
 }
 
 void Passenger::luggageInformation()
