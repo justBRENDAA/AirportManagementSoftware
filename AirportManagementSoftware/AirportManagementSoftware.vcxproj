@@ -135,6 +135,8 @@
     <ClCompile Include="Luggage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Passenger.cpp" />
+    <ClCompile Include="Staff.cpp" />
+    <ClCompile Include="SupportRequests.cpp" />
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +144,8 @@
     <ClInclude Include="Login.h" />
     <ClInclude Include="Luggage.h" />
     <ClInclude Include="Passenger.h" />
+    <ClInclude Include="Staff.h" />
+    <ClInclude Include="SupportRequests.h" />
     <ClInclude Include="UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

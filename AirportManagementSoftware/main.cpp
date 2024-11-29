@@ -48,10 +48,7 @@ int main() {
                     
                 }
                 else if (userType == "Staff") {
-                    std::cout << "\nOptions for staff: " << std::endl;
-                    std::cout << "1. Assist Passengers" << std::endl;
-                    std::cout << "2. Manage Flights" << std::endl;
-                    std::cout << "3. View Reports" << std::endl;
+                    //
                 }
                 else if (userType == "Security") {
                     std::cout << "\nOptions for security: " << std::endl;
@@ -66,8 +63,6 @@ int main() {
             // if login didnt work
             else {
                 ui.displayUnsuccessfulLogin();  // display failure message if login does not work
-
-                
 
                 int choice;
                 std::cin >> choice;

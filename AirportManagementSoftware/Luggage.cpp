@@ -42,4 +42,4 @@ void Luggage::displayInfo()
     std::cout << "Location: " << location << std::endl;
 
     std::cout << "\nFor information regarding exact luggage location\nvisit our Luggage Kiosk and enter the luggage ID";
-}
+} 

@@ -37,7 +37,7 @@ void Passenger::displayOptions()
             setChoice(selection);
 
             if (getChoice() == -1)
-                std::cout << "Please select a valid option(1-3): ";
+                std::cout << "Please select a valid option(1-4): ";
         } while (getChoice() == -1);
 
         handleChoice(getChoice());
