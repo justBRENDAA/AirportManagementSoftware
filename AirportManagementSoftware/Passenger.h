@@ -38,7 +38,6 @@ public:
     // getters
     int getChoice() const;
 
-
     // Destructor
     ~Passenger();
 };

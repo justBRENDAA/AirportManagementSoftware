@@ -42,7 +42,9 @@ public:
     // getter functions
     std::string getUserType() const;           
     std::string getUserFirstName() const;             
-    int getUserID() const;           
+    int getUserID() const;
+    sql::Connection* getConnection(); // to pass connection object to other functions
+                                      // we do this so all classes wont have to establish a connection since we already have one made in this class
 
     // Destructor
     ~Login();

@@ -207,6 +207,8 @@ bool Login::deleteAccount(const std::string& inputUsername) {
     }
 }
 
+
+// setter/getter methods
 void Login::setUserType(const std::string& type)
 {
     user_type = type;
@@ -235,4 +237,9 @@ void Login::setUserID(const int& id)
 int Login::getUserID() const
 {
     return user_id;
+}
+
+sql::Connection* Login::getConnection()
+{
+    return con;
 }
