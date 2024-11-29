@@ -11,49 +11,27 @@ Luggage::Luggage(sql::Connection* existingCon, std::string user)
 
 void Luggage::displayInfo()
 {
-    sql::PreparedStatement* user_pstmt = con->prepareStatement(
-        "SELECT user_id FROM Users WHERE username = ?"
-    );
-    user_pstmt->setString(1, username);
-    
-    sql::ResultSet* resUser = user_pstmt->executeQuery();
-
-    if (resUser->next()) {
-        user_id = resUser->getInt("user_id");
-    }
-
-    delete resUser;
-    delete user_pstmt;
-
-    sql::PreparedStatement* pass_pstmt = con->prepareStatement(
-        "SELECT passenger_id FROM Passengers WHERE user_id = ?"
-    );
-    pass_pstmt->setInt(1, user_id);
-
-    sql::ResultSet* resPass = pass_pstmt->executeQuery();
-
-    if (resPass->next()) {
-        passenger_id = resPass->getInt("passenger_id");
-    }
-
-    delete resPass;
-    delete pass_pstmt;
-
     sql::PreparedStatement* pstmt = con->prepareStatement(
-        "SELECT luggage_id, passenger_id, flight_id, location FROM Luggage WHERE passenger_id = ?"
+        "SELECT L.luggage_id, L.passenger_id, L.flight_id, L.location "
+        "FROM Luggage L "
+        "JOIN Passengers P ON L.passenger_id = P.passenger_id "
+        "JOIN Users U ON P.user_id = U.user_id "
+        "WHERE U.username = ?"
     );
-    pstmt->setInt(1, passenger_id);
 
-    sql::ResultSet* resLuggage = pstmt->executeQuery();
+    pstmt->setString(1, username);  // filter by username
 
-    if (resLuggage->next()) {
-        luggage_id = resLuggage->getInt("luggage_id");
-        passenger_id = resLuggage->getInt("passenger_id");
-        flight_id = resLuggage->getInt("flight_id");
-        location = resLuggage->getString("location");
+    // Execute the query and process the results
+    sql::ResultSet* res = pstmt->executeQuery();
+
+    if (res->next()) {
+        luggage_id = res->getInt("luggage_id");
+        passenger_id = res->getInt("passenger_id");
+        flight_id = res->getInt("flight_id");
+        location = res->getString("location");
     }
 
-    delete resLuggage;
+    delete res;
     delete pstmt;
 
     std::cout << "\n LUGGAGE INFORMATION\n";
