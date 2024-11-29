@@ -21,25 +21,34 @@ Passenger::~Passenger() {
 
 void Passenger::displayOptions()
 {
-    
-    std::cout << "\n PASSENGER OPTIONS " << std::endl;
-    std::cout << "=====================" << std::endl;
-    std::cout << "1. Check Flight Information" << std::endl;
-    std::cout << "2. Display Luggage Information" << std::endl;
-    std::cout << "3. Request Support" << std::endl;
-    std::cout << "4. Exit Program" << std::endl;
-
-    int selection;
-
+    char userContinue = 'N';
     do {
-        std::cin >> selection;
-        setChoice(selection);
+        std::cout << "\n PASSENGER OPTIONS " << std::endl;
+        std::cout << "=====================" << std::endl;
+        std::cout << "1. Check Flight Information" << std::endl;
+        std::cout << "2. Display Luggage Information" << std::endl;
+        std::cout << "3. Request Support" << std::endl;
+        std::cout << "4. Exit Program" << std::endl;
 
-        if (getChoice() == -1)
-            std::cout << "Please select a valid option(1-3): ";
-    } while (getChoice() == -1);
+        int selection;
 
-    handleChoice(getChoice());
+        do {
+            std::cin >> selection;
+            setChoice(selection);
+
+            if (getChoice() == -1)
+                std::cout << "Please select a valid option(1-3): ";
+        } while (getChoice() == -1);
+
+        handleChoice(getChoice());
+        
+        do {
+            std::cout << "\n\nWould you like select another Passenger option (Y/N)? ";
+            std::cin >> userContinue;
+            std::cout << std::endl;
+        } while (userContinue != 'Y' && userContinue != 'y' && userContinue != 'N' && userContinue != 'n');
+
+    } while (userContinue == 'Y' || userContinue == 'y');
 }
 
 void Passenger::handleChoice(int c)
@@ -64,7 +73,7 @@ void Passenger::checkFlightInformation()
 {
     Flight flight(con, username);
     flight.displayInfo();
-    std::cout << "\nFlight info displayed successfully)";
+    std::cout << "\n\n Flight info displayed successfully";
 }
 
 void Passenger::luggageInformation()

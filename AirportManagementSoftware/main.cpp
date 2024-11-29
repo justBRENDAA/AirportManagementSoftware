@@ -13,12 +13,13 @@ int main() {
 
     // Initial menu: Login, Create Account, or Exit
     
-    std::cout << "Welcome to the system. Choose an option:" << std::endl;
+    std::cout << "Welcome to the system.Choose an option : " << std::endl;
     std::cout << "1. Login" << std::endl;
     std::cout << "2. Create a new account" << std::endl;
     std::cout << "3. Exit the program" << std::endl;
         
     std::cin >> option;
+    std::cout << "\n";
         
     switch (option) {
         case 1: {
