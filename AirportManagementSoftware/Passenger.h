@@ -16,6 +16,8 @@ private:
     std::string password;
     std::string user_type;
     std::string first_name;
+    std::string description;
+    int pass_id;
     int choice;
     int user_id;
 
