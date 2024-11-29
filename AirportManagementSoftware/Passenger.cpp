@@ -27,6 +27,7 @@ void Passenger::displayOptions()
     std::cout << "1. Check Flight Information" << std::endl;
     std::cout << "2. Display Luggage Information" << std::endl;
     std::cout << "3. Request Support" << std::endl;
+    std::cout << "4. Exit Program" << std::endl;
 
     int selection;
 
@@ -45,12 +46,17 @@ void Passenger::handleChoice(int c)
 {
     if (choice == 1) {
         checkFlightInformation();
+        std::cout << "";
     }
     else if (choice == 2) {
         luggageInformation();
     }
     else if (choice == 3){
         requestSupport();
+    }
+    else if (choice == 4) {
+        std::cout << "Exiting program . . . \n";
+        return;
     }
 }
 
@@ -79,7 +85,7 @@ void Passenger::requestSupport()
 
 void Passenger::setChoice(const int& c)
 {
-    if (c >= 1 && c <= 3)
+    if (c >= 1 && c <= 4)
         choice = c;
     else
         choice = -1;
