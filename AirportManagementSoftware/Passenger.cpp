@@ -43,11 +43,19 @@ void Passenger::displayOptions()
 
         handleChoice(getChoice());
         
-        do {
-            std::cout << "\n\nWould you like select another Passenger option (Y/N)? ";
-            std::cin >> userContinue;
-            std::cout << std::endl;
-        } while (userContinue != 'Y' && userContinue != 'y' && userContinue != 'N' && userContinue != 'n');
+        bool exitProgram = false;
+        if (getChoice() == 5) {
+            exitProgram = true;
+        }
+
+        if(!exitProgram)
+        {
+            do {
+                std::cout << "\nWould you like select another Passenger option (Y/N)? ";
+                std::cin >> userContinue;
+                std::cout << std::endl;
+            } while (userContinue != 'Y' && userContinue != 'y' && userContinue != 'N' && userContinue != 'n');
+        }
 
     } while (userContinue == 'Y' || userContinue == 'y');
 }
@@ -69,7 +77,6 @@ void Passenger::handleChoice(int c)
     }
     else if (choice == 5) {
         std::cout << "Exiting program . . . \n";
-        return;
     }
 }
 

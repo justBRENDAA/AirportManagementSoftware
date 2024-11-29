@@ -24,8 +24,6 @@ public:
 	void updateRequestStatus();
 
 	sql::Connection* getConnection();
-
-	
 };
 
 #endif
