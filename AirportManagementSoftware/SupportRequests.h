@@ -15,12 +15,16 @@ private:
 public:
 	SupportRequests(sql::Connection* con, std::string user);
 
-
+	void setPassengerId();
 	void insertRequest();
-	void viewRequests();
+	void viewUserRequests();
+	void viewAllOpenTickets();
+	void viewAllClosedTickets();
 	void updateRequestStatus();
 
 	sql::Connection* getConnection();
+
+	
 };
 
 #endif

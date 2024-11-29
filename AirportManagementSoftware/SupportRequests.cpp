@@ -10,14 +10,9 @@ SupportRequests::SupportRequests(sql::Connection* existingCon, std::string user)
 	username = user;
 }
 
-// method called by users to send a support request
-void SupportRequests::insertRequest()
+void SupportRequests::setPassengerId()
 {
     try{
-        std::cin.ignore();
-        std::cout << "Please enter a description of the support request below: \n";
-        std::getline(std::cin, supportRequestDescription);
-
         sql::PreparedStatement* pstmt = con->prepareStatement(
             "SELECT p.passenger_id "
             "FROM Users u "                                // get passenger id from passengers table
@@ -33,6 +28,23 @@ void SupportRequests::insertRequest()
             pass_id = res->getInt("passenger_id");         // store obrained id in private variable
         }
 
+        delete pstmt;
+    }
+    catch (sql::SQLException& e) {
+        std::cerr << "Error obtaining passenger id: " << e.what() << std::endl;
+    }
+}
+
+// method called by users to send a support request
+void SupportRequests::insertRequest()
+{
+    try{
+        std::cin.ignore();
+        std::cout << "Please enter a description of the support request below: \n";
+        std::getline(std::cin, supportRequestDescription);
+
+        setPassengerId();
+
         sql::PreparedStatement* support_pstmt = con->prepareStatement(               // query inserts into 
             "INSERT INTO Supportrequests (passenger_id, description) VALUES (?, ?)"  // support request table
         );
@@ -41,7 +53,7 @@ void SupportRequests::insertRequest()
 
         support_pstmt->executeUpdate();                            // execute the query
 
-        delete pstmt;                                              // delete pointers
+                                                      // delete pointers
         delete support_pstmt;
 
         std::cout << "\nRequest has been sent.";
@@ -49,4 +61,9 @@ void SupportRequests::insertRequest()
     catch (sql::SQLException& e) {
         std::cerr << "Error sending support request: " << e.what() << std::endl;
     }
+}
+
+void SupportRequests::viewUserRequests()
+{
+
 }
