@@ -34,6 +34,7 @@ public:
     void checkFlightInformation();
     void luggageInformation();
     void requestSupport();
+    void viewSupportRequests();
 
     // getters
     int getChoice() const;

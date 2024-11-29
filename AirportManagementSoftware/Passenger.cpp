@@ -28,7 +28,8 @@ void Passenger::displayOptions()
         std::cout << "1. Check Flight Information" << std::endl;
         std::cout << "2. Display Luggage Information" << std::endl;
         std::cout << "3. Request Support" << std::endl;
-        std::cout << "4. Exit Program" << std::endl;
+        std::cout << "4. View Your Support Requests" << std::endl;
+        std::cout << "5. Exit Program" << std::endl;
 
         int selection;
 
@@ -37,7 +38,7 @@ void Passenger::displayOptions()
             setChoice(selection);
 
             if (getChoice() == -1)
-                std::cout << "Please select a valid option(1-4): ";
+                std::cout << "Please select a valid option(1-5): ";
         } while (getChoice() == -1);
 
         handleChoice(getChoice());
@@ -64,6 +65,9 @@ void Passenger::handleChoice(int c)
         requestSupport();
     }
     else if (choice == 4) {
+        viewSupportRequests();
+    }
+    else if (choice == 5) {
         std::cout << "Exiting program . . . \n";
         return;
     }
@@ -92,10 +96,16 @@ void Passenger::requestSupport()
     sup.insertRequest();
 }
 
+void Passenger::viewSupportRequests()
+{
+    SupportRequests sup(con, username);
+    sup.viewUserRequests();
+}
+
 
 void Passenger::setChoice(const int& c)
 {
-    if (c >= 1 && c <= 4)
+    if (c >= 1 && c <= 5)
         choice = c;
     else
         choice = -1;

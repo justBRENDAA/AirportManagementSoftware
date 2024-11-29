@@ -57,13 +57,50 @@ void SupportRequests::insertRequest()
         delete support_pstmt;
 
         std::cout << "\nRequest has been sent.";
-    }
-    catch (sql::SQLException& e) {
+    }catch (sql::SQLException& e) {
         std::cerr << "Error sending support request: " << e.what() << std::endl;
     }
 }
 
 void SupportRequests::viewUserRequests()
+{
+    try {
+        setPassengerId();
+
+        sql::PreparedStatement* pstmt = con->prepareStatement(
+            "SELECT request_id, description, status "
+            "FROM Supportrequests "
+            "WHERE passenger_id = ?"
+        );
+        pstmt->setInt(1, pass_id);
+
+        sql::ResultSet* res = pstmt->executeQuery();
+
+        std::cout << "\n YOUR SUPPORT REQUESTS\n";
+        std::cout << "==========================\n";
+
+        bool hasRequests = false;
+        while (res->next()) {
+            hasRequests = true;
+            std::cout << "Request ID: " << res->getInt("request_id") << "\n";
+            std::cout << "Description: " << res->getString("description") << "\n";
+            std::cout << "Status: " << res->getString("status") << "\n";
+            std::cout << "-------------------------\n";
+        }
+
+        if (!hasRequests) {
+            std::cout << "No support requests found.\n";
+        }
+
+        delete res;
+        delete pstmt;
+
+    }catch (sql::SQLException& e) {
+        std::cerr << "Error sending support request: " << e.what() << std::endl;
+    }
+}
+
+void SupportRequests::viewAllOpenTickets()
 {
 
 }
