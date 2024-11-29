@@ -21,9 +21,9 @@ void Passenger::displayOptions()
     
     std::cout << "\nPASSENGER OPTIONS: " << std::endl;
     std::cout << "=====================" << std::endl;
-    std::cout << "1. Check-In" << std::endl;
-    std::cout << "2. Get Gate Number" << std::endl;
-    std::cout << "3. Locate Luggage" << std::endl;
+    std::cout << "1. Check Flight Information" << std::endl;
+    std::cout << "2. Display Luggage Information" << std::endl;
+    std::cout << "3. Request Support" << std::endl;
 
     int selection;
 
@@ -36,6 +36,19 @@ void Passenger::displayOptions()
     } while (getChoice() == -1);
 }
 
+void Passenger::handleChoice()
+{
+    if (choice == 1) {
+        checkFlightInformation();
+    }
+    else if (choice == 2) {
+        luggageInformation();
+    }
+    else if (choice == 3){
+        requestSupport();
+    }
+}
+
 void Passenger::checkFlightInformation()
 {
     // first check if user has a ticket
@@ -43,7 +56,7 @@ void Passenger::checkFlightInformation()
     // message will direct them to the purchase desk with airport staff
 }
 
-void Passenger::locateLuggage()
+void Passenger::luggageInformation()
 {
     // again if a user has a ticket we can check their luggage
 }

@@ -27,8 +27,9 @@ public:
     Passenger(sql::Connection* existingCon);
 
     void displayOptions();
+    void handleChoice();
     void checkFlightInformation();
-    void locateLuggage();
+    void luggageInformation();
     void requestSupport();
 
     // getters
