@@ -56,7 +56,7 @@ void SupportRequests::insertRequest()
                                                       // delete pointers
         delete support_pstmt;
 
-        std::cout << "\nRequest has been sent.";
+        std::cout << "\nRequest has been sent.\n\n";
     }catch (sql::SQLException& e) {
         std::cerr << "Error sending support request: " << e.what() << std::endl;
     }
@@ -87,6 +87,8 @@ void SupportRequests::viewUserRequests()
             std::cout << "Status: " << res->getString("status") << "\n";
             std::cout << "-------------------------\n";
         }
+
+        std::cout << std::endl; // blank line
 
         if (!hasRequests) {
             std::cout << "No support requests found.\n";

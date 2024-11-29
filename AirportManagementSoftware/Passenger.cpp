@@ -22,6 +22,7 @@ Passenger::~Passenger() {
 void Passenger::displayOptions()
 {
     char userContinue = 'N';
+    bool exitProgram = false;
     do {
         std::cout << "\n PASSENGER OPTIONS " << std::endl;
         std::cout << "=====================" << std::endl;
@@ -43,7 +44,6 @@ void Passenger::displayOptions()
 
         handleChoice(getChoice());
         
-        bool exitProgram = false;
         if (getChoice() == 5) {
             exitProgram = true;
         }
@@ -51,13 +51,13 @@ void Passenger::displayOptions()
         if(!exitProgram)
         {
             do {
-                std::cout << "\nWould you like select another Passenger option (Y/N)? ";
+                std::cout << "Would you like select another Passenger option (Y/N)? ";
                 std::cin >> userContinue;
                 std::cout << std::endl;
             } while (userContinue != 'Y' && userContinue != 'y' && userContinue != 'N' && userContinue != 'n');
         }
 
-    } while (userContinue == 'Y' || userContinue == 'y');
+    } while (!exitProgram && (userContinue == 'Y' || userContinue == 'y'));
 }
 
 void Passenger::handleChoice(int c)
@@ -84,14 +84,14 @@ void Passenger::checkFlightInformation()
 {
     Flight flight(con, username);
     flight.displayInfo();
-    std::cout << "\n\n Flight info displayed successfully";
+    std::cout << "\nFlight info displayed successfully\n\n";
 }
 
 void Passenger::luggageInformation()
 {
     Luggage luggage(con, username);
     luggage.displayInfo();
-    std::cout << "\n\n Luggage info successfully diplayed";
+    std::cout << "\nLuggage info successfully diplayed\n\n";
 }
 
 void Passenger::requestSupport()
