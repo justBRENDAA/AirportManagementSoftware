@@ -63,15 +63,18 @@ void Staff::handleChoice(int c)
 
 void Staff::viewOpenTickets()
 {
-
+    SupportRequests sup(con, username);
+    sup.viewAllOpenTickets();
 }
 
 void Staff::updateOpenTickets()
 {
+    //
 }
 
 void Staff::viewFlightInformationReport()
 {
+    //
 }
 
 void Staff::setChoice(const int& c)

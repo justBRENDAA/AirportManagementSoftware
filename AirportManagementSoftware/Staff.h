@@ -1,9 +1,10 @@
-#ifndef PASSENGER_H
-#define PASSENGER_H
+#ifndef STAFF_H
+#define STAFF_H
 
 #include <string>
 #include <mysql_driver.h>
 #include <mysql_connection.h>
+#include "SupportRequests.h"
 
 class Staff {
 private:
@@ -28,7 +29,5 @@ public:
     int getChoice() const;
     sql::Connection* getConnection();
 };
-
-
 
 #endif

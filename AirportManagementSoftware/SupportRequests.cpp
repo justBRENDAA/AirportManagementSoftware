@@ -137,3 +137,16 @@ void SupportRequests::viewAllOpenTickets()
         std::cerr << "Error retrieving open support tickets: " << e.what() << std::endl;
     }
 }
+
+void SupportRequests::viewAllClosedTickets()
+{
+}
+
+void SupportRequests::updateRequestStatus()
+{
+}
+
+sql::Connection* SupportRequests::getConnection()
+{
+    return con;
+}

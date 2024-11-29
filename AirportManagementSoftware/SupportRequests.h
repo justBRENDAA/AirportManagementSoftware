@@ -5,6 +5,7 @@
 #include <mysql_driver.h>
 #include <mysql_connection.h>
 
+
 class SupportRequests {
 private:
 	sql::Connection* con = nullptr;

@@ -1,14 +1,15 @@
-#include <iostream>
-#include "Login.h"
 #include "UserInterface.h"
-#include "Passenger.h" //test
+#include "Login.h"
+#include "Passenger.h" 
+#include "Staff.h"
+
+#include <iostream>
 
 void newAccountPrompts(std::string& fn, std::string& ln, std::string& user, std::string& pass, std::string& phone, std::string& email, std::string& passnum);
 
 int main() {
-    Login login;       // create a Login object to handle login operations
     UserInterface ui;  // create a UserInterface object to handle displaying prompts and collecting input
-
+    Login login;       // create a Login object to handle login operations
     int option;
 
     // Initial menu: Login, Create Account, or Exit
@@ -48,7 +49,7 @@ int main() {
                     
                 }
                 else if (userType == "Staff") {
-                    //
+                    Staff s(login.getConnection(), username);
                 }
                 else if (userType == "Security") {
                     std::cout << "\nOptions for security: " << std::endl;
