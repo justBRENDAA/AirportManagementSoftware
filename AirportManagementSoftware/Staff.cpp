@@ -14,8 +14,9 @@ Staff::~Staff()
 void Staff::displayOptions()
 {
     char userContinue = 'N';
+    bool exitProgram = false;
     do {
-        std::cout << "\n STAFF OPTIONS " << std::endl;
+        std::cout << "\n   STAFF OPTIONS " << std::endl;
         std::cout << "=====================" << std::endl;
         std::cout << "1. View Open Support Tickets" << std::endl;
         std::cout << "2. Update Support Ticket Status" << std::endl;
@@ -34,13 +35,19 @@ void Staff::displayOptions()
 
         handleChoice(getChoice());
 
-        do {
-            std::cout << "\n\nWould you like to view the staff menu again? (Y/N)? ";
-            std::cin >> userContinue;
-            std::cout << std::endl;
-        } while (userContinue != 'Y' && userContinue != 'y' && userContinue != 'N' && userContinue != 'n');
+        if (getChoice() == 4) {
+            exitProgram = true;
+        }
 
-    } while (userContinue == 'Y' || userContinue == 'y');
+        if (!exitProgram)
+        {
+            do {
+                std::cout << "\nWould you like to view the staff menu again? (Y/N)? ";
+                std::cin >> userContinue;
+                std::cout << std::endl;
+            } while (userContinue != 'Y' && userContinue != 'y' && userContinue != 'N' && userContinue != 'n');
+        }
+    } while (!exitProgram && (userContinue == 'Y' || userContinue == 'y'));
 }
 
 void Staff::handleChoice(int c)
@@ -56,8 +63,7 @@ void Staff::handleChoice(int c)
         viewFlightInformationReport();
     }
     else if (choice == 4) {
-        std::cout << "Exiting program . . . \n";
-        return;
+        std::cout << "\nExiting program . . . \n";
     }
 }
 

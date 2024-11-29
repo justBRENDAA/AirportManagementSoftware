@@ -76,7 +76,7 @@ void Passenger::handleChoice(int c)
         viewSupportRequests();
     }
     else if (choice == 5) {
-        std::cout << "Exiting program . . . \n";
+        std::cout << "\nExiting program . . . \n";
     }
 }
 

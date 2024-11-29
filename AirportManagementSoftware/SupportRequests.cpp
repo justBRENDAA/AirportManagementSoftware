@@ -114,9 +114,8 @@ void SupportRequests::viewAllOpenTickets()
 
         sql::ResultSet* res = pstmt->executeQuery();
 
-        std::cout << "\nALL OPEN SUPPORT TICKETS";
-        std::cout << "\n (PENDING and ESCALATED)  \n";
-        std::cout << "=============================\n";
+        std::cout << "\n  ALL OPEN SUPPORT TICKETS";
+        std::cout << "==============================\n";
 
         bool hasOpenTickets = false; // flag to check if there is any tickets
         while (res->next()) {

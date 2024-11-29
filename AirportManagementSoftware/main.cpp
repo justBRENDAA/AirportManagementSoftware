@@ -50,6 +50,7 @@ int main() {
                 }
                 else if (userType == "Staff") {
                     Staff s(login.getConnection(), username);
+                    s.displayOptions();
                 }
                 else if (userType == "Security") {
                     std::cout << "\nOptions for security: " << std::endl;
