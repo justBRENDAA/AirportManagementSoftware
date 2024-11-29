@@ -5,7 +5,7 @@
 #include <mysql_driver.h>
 #include <mysql_connection.h>
 #include "Luggage.h"
-
+#include "SupportRequests.h"
 
 class Passenger {
 private:

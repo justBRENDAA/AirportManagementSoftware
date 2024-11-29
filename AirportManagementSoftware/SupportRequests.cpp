@@ -7,7 +7,7 @@
 SupportRequests::SupportRequests(sql::Connection* existingCon, std::string user)
 {
 	con = existingCon;
-	username = username;
+	username = user;
 }
 
 // method called by users to send a support request
