@@ -7,8 +7,9 @@
 #include <cstring>  // for std::strlen
 
 
-Passenger::Passenger(sql::Connection* existingCon, std::string username) {
+Passenger::Passenger(sql::Connection* existingCon, std::string user) {
     con = existingCon;  // establishes the connection as soon as Login object is instantiated
+    username = user;
 }
 
 
@@ -20,7 +21,7 @@ Passenger::~Passenger() {
 void Passenger::displayOptions()
 {
     
-    std::cout << "\nPASSENGER OPTIONS: " << std::endl;
+    std::cout << "\n PASSENGER OPTIONS " << std::endl;
     std::cout << "=====================" << std::endl;
     std::cout << "1. Check Flight Information" << std::endl;
     std::cout << "2. Display Luggage Information" << std::endl;
@@ -62,8 +63,8 @@ void Passenger::checkFlightInformation()
 void Passenger::luggageInformation()
 {
     Luggage luggage(con, username);
-
-    
+    luggage.displayInfo();
+    std::cout << "\n\n Luggage info successfully diplayed";
 }
 
 void Passenger::requestSupport()

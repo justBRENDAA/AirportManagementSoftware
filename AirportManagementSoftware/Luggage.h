@@ -9,9 +9,10 @@
 class Luggage {
 private:
     std::string username;
-    std::string luggage_id;
-    std::string passenger_id;
-    std::string flight_id;
+    int user_id;
+    int luggage_id;
+    int passenger_id;
+    int flight_id;
     std::string location;
     
     sql::Connection* con;
