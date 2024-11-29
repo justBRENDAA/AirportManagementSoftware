@@ -7,9 +7,9 @@
 
 class Staff {
 private:
-    sql::Connection* con;  // stores the database connection
-    std::string username;
-    int choice;
+    sql::Connection* con = nullptr;  // stores the database connection
+    std::string username = "";
+    int choice = -1;
 
 public:
     Staff(sql::Connection* existingCon, std::string username);

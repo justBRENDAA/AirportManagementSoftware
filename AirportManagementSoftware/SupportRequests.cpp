@@ -102,5 +102,38 @@ void SupportRequests::viewUserRequests()
 
 void SupportRequests::viewAllOpenTickets()
 {
+    try {
+        // this query selects all tickets with pending and escalated status
+        sql::PreparedStatement* pstmt = con->prepareStatement(
+            "SELECT request_id, passenger_id, description, status "
+            "FROM Supportrequests "
+            "WHERE status = 'Pending' OR status = 'Escalated'"
+        );
 
+        sql::ResultSet* res = pstmt->executeQuery();
+
+        std::cout << "\nALL OPEN SUPPORT TICKETS";
+        std::cout << "\n (PENDING and ESCALATED)  \n";
+        std::cout << "=============================\n";
+
+        bool hasOpenTickets = false; // flag to check if there is any tickets
+        while (res->next()) {
+            hasOpenTickets = true;
+            std::cout << "Request ID: " << res->getInt("request_id") << "\n";
+            std::cout << "Passenger ID: " << res->getInt("passenger_id") << "\n";
+            std::cout << "Description: " << res->getString("description") << "\n";
+            std::cout << "Status: " << res->getString("status") << "\n";
+            std::cout << "------------------------------\n";
+        }
+
+        if (!hasOpenTickets) {
+            std::cout << "No open support tickets found with Pending or Escalated status.\n";
+        }
+
+        delete res;
+        delete pstmt;
+    }
+    catch (sql::SQLException& e) {
+        std::cerr << "Error retrieving open support tickets: " << e.what() << std::endl;
+    }
 }
