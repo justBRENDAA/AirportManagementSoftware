@@ -8,10 +8,6 @@
 
 class Passenger {
 private:
-    // Connect and disconnect from the database
-    void connectToDatabase();
-    void disconnectDatabase();
-
     // database connection object
     sql::Connection* con;  // stores the database connection
 
