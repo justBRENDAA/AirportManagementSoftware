@@ -42,7 +42,7 @@ int main() {
 
                 // OPTIONS DISPLAYED ARE ONLY TEMPORARY. We'll call the necessary functions from each class once we create them
                 if (userType == "Passenger") {
-                    Passenger p(login.getConnection());
+                    Passenger p(login.getConnection(), username);
                     p.displayOptions();
                     
                 }

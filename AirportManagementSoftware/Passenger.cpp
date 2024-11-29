@@ -1,4 +1,5 @@
 #include "Passenger.h"
+#include "Luggage.h"
 #include <cppconn/prepared_statement.h>
 #include <cppconn/resultset.h>
 #include <iostream>
@@ -6,7 +7,7 @@
 #include <cstring>  // for std::strlen
 
 
-Passenger::Passenger(sql::Connection* existingCon) {
+Passenger::Passenger(sql::Connection* existingCon, std::string username) {
     con = existingCon;  // establishes the connection as soon as Login object is instantiated
 }
 
@@ -34,9 +35,11 @@ void Passenger::displayOptions()
         if (getChoice() == -1)
             std::cout << "Please select a valid option(1-3): ";
     } while (getChoice() == -1);
+
+    handleChoice(getChoice());
 }
 
-void Passenger::handleChoice()
+void Passenger::handleChoice(int c)
 {
     if (choice == 1) {
         checkFlightInformation();
@@ -58,7 +61,9 @@ void Passenger::checkFlightInformation()
 
 void Passenger::luggageInformation()
 {
-    // again if a user has a ticket we can check their luggage
+    Luggage luggage(con, username);
+
+    
 }
 
 void Passenger::requestSupport()
@@ -81,4 +86,9 @@ void Passenger::setChoice(const int& c)
 int Passenger::getChoice() const
 {
     return choice;
+}
+
+sql::Connection* Passenger::getConnection()
+{
+    return con;
 }

@@ -4,6 +4,7 @@
 #include <string>
 #include <mysql_driver.h>
 #include <mysql_connection.h>
+#include "Luggage.h"
 
 
 class Passenger {
@@ -24,16 +25,17 @@ private:
 
 public:
     // Constructor
-    Passenger(sql::Connection* existingCon);
+    Passenger(sql::Connection* existingCon, std::string username);
 
     void displayOptions();
-    void handleChoice();
+    void handleChoice(int c);
     void checkFlightInformation();
     void luggageInformation();
     void requestSupport();
 
     // getters
     int getChoice() const;
+    sql::Connection* getConnection();
 
     // Destructor
     ~Passenger();
