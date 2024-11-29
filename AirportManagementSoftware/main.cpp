@@ -67,11 +67,7 @@ int main() {
             else {
                 ui.displayUnsuccessfulLogin();  // display failure message if login does not work
 
-                // Give the user options if login fails
-                std::cout << "Choose an option: " << std::endl;
-                std::cout << "1. Try logging in again" << std::endl;
-                std::cout << "2. Register a new account" << std::endl;
-                std::cout << "3. Exit the program" << std::endl;
+                
 
                 int choice;
                 std::cin >> choice;

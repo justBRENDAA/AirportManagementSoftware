@@ -1,10 +1,11 @@
 #include "UserInterface.h"
 #include <iostream>
-#include <conio.h>  // For password masking in console
+#include <conio.h>  // for password masking in console
 
 void UserInterface::displayLoginScreen() {
     std::cout << "Welcome to the Airport System!" << std::endl;
     std::cout << "Please log in to continue." << std::endl;
+    std::cout << "===============================" << std::endl;
 }
 
 void UserInterface::displaySuccessfulLogin() {
@@ -12,7 +13,13 @@ void UserInterface::displaySuccessfulLogin() {
 }
 
 void UserInterface::displayUnsuccessfulLogin() {
-    std::cout << "\nLogin failed. Please try again." << std::endl;
+    std::cout << "\nLogin failed!" << std::endl;
+    // Give the user options if login fails
+    std::cout << "Choose an option: " << std::endl;
+    std::cout << "1. Try logging in again" << std::endl;
+    std::cout << "2. Register a new account" << std::endl;
+    std::cout << "3. Exit the program" << std::endl;
+    std::cout << "Select option (1-3): ";
 }
 
 std::string UserInterface::getUsernameInput() {
