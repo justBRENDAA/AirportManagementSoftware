@@ -39,6 +39,9 @@
     <ClCompile Include="SupportRequests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Security.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UserInterface.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SupportRequests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Security.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

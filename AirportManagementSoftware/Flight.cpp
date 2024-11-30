@@ -34,19 +34,23 @@ void Flight::displayInfo()
         origin_airport_name = resFlight->getString("origin_airport_name");
         destination_airport_name = resFlight->getString("destination_airport_name");
         capacity = resFlight->getInt("capacity");
+
+        std::cout << "\n  FLIGHT INFORMATION\n";
+        std::cout << "========================\n";
+        std::cout << "Flight number      : " << flight_number << std::endl;
+        std::cout << "Departure Info     : " << departure_time << std::endl;
+        std::cout << "Arrival Info       : " << arrival_time << std::endl;
+        std::cout << "Origin Airport     : " << origin_airport_name << std::endl;
+        std::cout << "Destination Airport: " << destination_airport_name << std::endl;
+        std::cout << "Flight Capacity    : " << capacity << std::endl;
+    }
+    else {
+        std::cout << "\nYou don't have a flight ticket.\n"
+                  << "Please visit the Ticket Booking desk to purchase a flight ticket.\n";
     }
 
     delete resFlight;
     delete pstmt;
-
-    std::cout << "\n  FLIGHT INFORMATION\n";
-    std::cout << "========================\n";
-    std::cout << "Flight number      : " << flight_number << std::endl;
-    std::cout << "Departure Info     : " << departure_time << std::endl;
-    std::cout << "Arrival Info       : " << arrival_time << std::endl;
-    std::cout << "Origin Airport     : " << origin_airport_name << std::endl;
-    std::cout << "Destination Airport: " << destination_airport_name << std::endl;
-    std::cout << "Flight Capacity    : " << capacity << std::endl;
 }
 
 void Flight::displayFlightReport()
@@ -97,7 +101,7 @@ void Flight::displayFlightReport()
         delete passengers_pstmt;
     }
 
-    delete flightNum_pstmt; // Clean up the flight query statement
-    delete flightNum_results;     // Clean up the flight result set
+    delete flightNum_pstmt; 
+    delete flightNum_results;    
 
 }

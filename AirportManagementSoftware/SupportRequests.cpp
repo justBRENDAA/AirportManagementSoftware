@@ -89,10 +89,9 @@ void SupportRequests::viewUserRequests()
             std::cout << "-------------------------\n";
         }
 
-        std::cout << std::endl; // blank line
 
         if (!hasRequests) {
-            std::cout << "No support requests found.\n";
+            std::cout << "No support requests found.";
         }
 
         delete res;

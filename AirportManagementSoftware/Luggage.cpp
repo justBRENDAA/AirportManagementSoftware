@@ -21,7 +21,6 @@ void Luggage::displayInfo()
 
     pstmt->setString(1, username);  // filter by username
 
-    // Execute the query and process the results
     sql::ResultSet* res = pstmt->executeQuery();
 
     if (res->next()) {
@@ -29,17 +28,24 @@ void Luggage::displayInfo()
         passenger_id = res->getInt("passenger_id");
         flight_id = res->getInt("flight_id");
         location = res->getString("location");
+
+        std::cout << "\n LUGGAGE INFORMATION\n";
+        std::cout << "========================\n";
+        std::cout << "Luggage ID:    " << luggage_id << std::endl;
+        std::cout << "Passenger ID:  " << passenger_id << std::endl;
+        std::cout << "Flight ID:     " << flight_id << std::endl;
+        std::cout << "Location: " << location << std::endl;
+
+        std::cout << "\nFor information regarding exact luggage location\n"
+                  << "visit our Luggage Kiosk and enter the luggage ID";
+    }
+    else {
+        std::cout << "\nYou don't have a flight ticket.\n"
+                  << "Please visit the Ticket Booking desk to purchase a flight ticket.\n";
     }
 
     delete res;
     delete pstmt;
 
-    std::cout << "\n LUGGAGE INFORMATION\n";
-    std::cout << "========================\n";
-    std::cout << "Luggage ID:    " << luggage_id << std::endl;
-    std::cout << "Passenger ID:  " << passenger_id << std::endl;
-    std::cout << "Flight ID:     " << flight_id << std::endl;
-    std::cout << "Location: " << location << std::endl;
-
-    std::cout << "\nFor information regarding exact luggage location\nvisit our Luggage Kiosk and enter the luggage ID";
+    
 } 

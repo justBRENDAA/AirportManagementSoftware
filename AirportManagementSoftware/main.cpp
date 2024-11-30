@@ -53,9 +53,10 @@ int main() {
                 }
                 else if (userType == "Security") {
                     std::cout << "\nOptions for security: " << std::endl;
-                    std::cout << "1. Enforce Safety" << std::endl;
-                    std::cout << "2. Check Airport" << std::endl;
-                    std::cout << "3. Manage Threats" << std::endl;
+                    std::cout << "1. Log Security Threat" << std::endl;
+                    std::cout << "2. View Security Threat List" << std::endl;
+                    std::cout << "3. View Flight Information" << std::endl;
+                    std::cout << "3. Exit Program" << std::endl;
                 }
                 else {
                     std::cout << "Unknown user type." << std::endl; // in case user type is wrong in database

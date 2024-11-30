@@ -135,6 +135,7 @@
     <ClCompile Include="Luggage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Passenger.cpp" />
+    <ClCompile Include="Security.cpp" />
     <ClCompile Include="Staff.cpp" />
     <ClCompile Include="SupportRequests.cpp" />
     <ClCompile Include="UserInterface.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Login.h" />
     <ClInclude Include="Luggage.h" />
     <ClInclude Include="Passenger.h" />
+    <ClInclude Include="Security.h" />
     <ClInclude Include="Staff.h" />
     <ClInclude Include="SupportRequests.h" />
     <ClInclude Include="UserInterface.h" />
