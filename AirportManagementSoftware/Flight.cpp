@@ -48,3 +48,29 @@ void Flight::displayInfo()
     std::cout << "Destination Airport: " << destination_airport_name << std::endl;
     std::cout << "Flight Capacity    : " << capacity << std::endl;
 }
+
+void Flight::displayFlightReport()
+{
+    std::cout << "\n AVAILABLE FLIGHTS\n";
+    std::cout << "=======================\n";
+
+    sql::PreparedStatement* flight_pstmt = con->prepareStatement(
+        "SELECT flight_number FROM Flights;"
+    );
+
+    sql::ResultSet* flight_res = flight_pstmt ->executeQuery();
+
+    std::vector<std::string> flightNumbers;
+
+    // store/display all flight numbers
+    while (flight_res ->next()) {
+        std::string flightNumber = flight_res ->getString("flight_number");
+        std::cout << "  " << flightNumber << "\n";
+        flightNumbers.push_back(flightNumber);
+    }
+
+    // promt user to select a flight to get info abt
+    std::string selectedFlight;
+    std::cout << "\nEnter the flight number you want to view details for: ";
+    std::cin >> selectedFlight;
+}

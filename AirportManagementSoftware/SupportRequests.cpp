@@ -242,7 +242,7 @@ void SupportRequests::updateRequestStatus()
             std::cout << "Request ID " << req_id << " status updated to " << newStatus << ".\n";
         }
         else {
-            std::cout << "Invalid status entered or status is the same as the current one.\n";
+            std::cout << "Invalid status entered.\n";
         }
     }
     else {

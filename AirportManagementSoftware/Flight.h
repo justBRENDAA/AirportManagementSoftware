@@ -27,6 +27,7 @@ private:
 public:
 	Flight(sql::Connection* existingCon, std::string username);
 	void displayInfo();
+	void displayFlightReport();
 };
 
 #endif

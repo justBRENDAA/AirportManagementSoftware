@@ -95,7 +95,8 @@ void Staff::updateOpenTickets()
 
 void Staff::viewFlightInformationReport()
 {
-    //
+    Flight f(con, username);
+    f.displayFlightReport();
 }
 
 void Staff::setChoice(const int& c)
