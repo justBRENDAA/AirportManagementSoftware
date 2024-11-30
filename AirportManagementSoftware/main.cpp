@@ -7,7 +7,7 @@
 #include <iostream>
 
 void newAccountPrompts(std::string& fn, std::string& ln, std::string& user, std::string& pass, std::string& phone, std::string& email, std::string& passnum);
-int getIntInput();
+int getIntInput(bool &f);
 
 int main() {
     UserInterface ui;  // create a UserInterface object to handle displaying prompts and collecting input
@@ -20,112 +20,95 @@ int main() {
     std::cout << "1. Login" << std::endl;
     std::cout << "2. Create a new account" << std::endl;
     std::cout << "3. Exit the program" << std::endl;
-        
-    option = getIntInput();
+    
+    bool validOption = false;   
+    option = getIntInput(validOption);
     std::cout << "\n";
-        
-    switch (option) {
-        case 1: {
-            // User chose to login
-            ui.displayLoginScreen();
+    
+    if(validOption)
+    {
+        switch (option) {
+            case 1: {
+                // User chose to login
+                ui.displayLoginScreen();
 
-            // get user input on username and password from UserInterface class
-            std::string username = ui.getUsernameInput();
-            std::string password = ui.getPasswordInput();
+                // get user input on username and password from UserInterface class
+                std::string username = ui.getUsernameInput();
+                std::string password = ui.getPasswordInput();
 
-            // attempt login
-            if (login.login(username, password)) {
-                ui.displaySuccessfulLogin();  // Display success message if login works
+                // attempt login
+                if (login.login(username, password))
+                {
 
-                // Retrieve and display the user's first name
-                std::string firstName = login.getUserFirstName();
-                std::cout << "Welcome, " << firstName << "!" << std::endl;
-
-                // Display options based on the user type
-                std::string userType = login.getUserType();
-
-                // OPTIONS DISPLAYED ARE ONLY TEMPORARY. We'll call the necessary functions from each class once we create them
-                if (userType == "Passenger") {
-                    Passenger p(login.getConnection(), username);
-                    p.displayOptions();
                 }
-                else if (userType == "Staff") {
-                    Staff s(login.getConnection(), username);
-                    s.displayOptions();
-                }
-                else if (userType == "Security") {
-                    Security s(login.getConnection(), username);
-                    s.displayOptions();
-                }
+                // if login didnt work
                 else {
-                    std::cout << "Unknown user type." << std::endl; // in case user type is wrong in database
-                }
-            }
-            // if login didnt work
-            else {
-                ui.displayUnsuccessfulLogin();  // display failure message if login does not work
+                    ui.displayUnsuccessfulLogin();  // display failure message if login does not work
 
-                int choice;
-                std::cin >> choice;
+                    int choice;
+                    std::cin >> choice;
 
-                if (choice == 1) {
-                    // Retry login
-                    std::cout << "\nRetrying login..." << std::endl;
-                    return main();  // restart the program
-                }
-                else if (choice == 2) { // havent tested my creating account. i actually think we need to make default user_type be Passenger
-                    std::string first_name, last_name, username, password, phone_number, email, passport_num;
-                    newAccountPrompts(first_name, last_name, username, password, phone_number, email, passport_num);
+                    if (choice == 1) {
+                        // Retry login
+                        std::cout << "\nRetrying login..." << std::endl;
+                        return main();  // restart the program
+                    }
+                    else if (choice == 2) { // havent tested my creating account. i actually think we need to make default user_type be Passenger
+                        std::string first_name, last_name, username, password, phone_number, email, passport_num;
+                        newAccountPrompts(first_name, last_name, username, password, phone_number, email, passport_num);
 
-                    // Call createAccount from Login class to register the user 
-                    // (this only creates passenger login. For staff/security admin will add them in the database and provde credentials)
-                    if (login.createAccount(username, password, phone_number, email, first_name, last_name, passport_num)) {
-                        std::cout << "Account successfully created!" << std::endl;
+                        // Call createAccount from Login class to register the user 
+                        // (this only creates passenger login. For staff/security admin will add them in the database and provde credentials)
+                        if (login.createAccount(username, password, phone_number, email, first_name, last_name, passport_num)) {
+                            std::cout << "Account successfully created!" << std::endl;
+                        }
+                        else {
+                            std::cout << "\nError creating account." << std::endl;
+                        }
+                    }
+                    else if (choice == 3) {
+                        std::cout << "\nExiting the program." << std::endl;
+
                     }
                     else {
-                        std::cout << "\nError creating account." << std::endl;
+                        std::cout << "Invalid choice. Exiting the program." << std::endl;
+                        return 0;  // Exit the program if invalid choice
                     }
                 }
-                else if (choice == 3) {
-                    std::cout << "\nExiting the program." << std::endl;
-                    
+                break;
+            }
+                  // create new account
+            case 2: {
+                // create a new account
+                std::string first_name, last_name, username, password, phone_number, email, passport_num;
+                newAccountPrompts(first_name, last_name, username, password, phone_number, email, passport_num);
+
+                // Call createAccount from Login class to register the user 
+                // (this only creates passenger login. For staff/security admin will add them in the database and provde credentials)
+                if (login.createAccount(username, password, phone_number, email, first_name, last_name, passport_num)) {
+                    std::cout << "\nAccount successfully created!\n" << std::endl;
+                    return main(); // restarts program so user can select to login or exit
                 }
                 else {
-                    std::cout << "Invalid choice. Exiting the program." << std::endl;
-                    return 0;  // Exit the program if invalid choice
+                    std::cout << "\nError creating account." << std::endl;
                 }
+                break;
             }
-            break;
-        }
-        // create new account
-        case 2: {
-            // create a new account
-            std::string first_name, last_name, username, password, phone_number, email, passport_num;
-            newAccountPrompts(first_name, last_name, username, password, phone_number, email, passport_num);
-
-            // Call createAccount from Login class to register the user 
-            // (this only creates passenger login. For staff/security admin will add them in the database and provde credentials)
-            if (login.createAccount(username, password, phone_number, email, first_name, last_name, passport_num)) {
-                std::cout << "\nAccount successfully created!\n" << std::endl;
-                return main(); // restarts program so user can select to login or exit
+                  // exit the program
+            case 3: {
+                std::cout << "Exiting the program. . ." << std::endl;
+                break;
             }
-            else {
-                std::cout << "\nError creating account." << std::endl;
+                  // invalid choice
+            default: {
+                std::cout << "Invalid choice. Try again.\n" << std::endl;
+                return main();
+                break;
             }
-            break;
-        }
-        // exit the program
-        case 3: {
-            std::cout << "Exiting the program. . ." << std::endl;
-            break;
-        }
-        // invalid choice
-        default: {
-            std::cout << "Invalid choice. Try again.\n" << std::endl;
-            return main();
-            break;
         }
     }
+    else
+        return main();
    
     return 0;
 }
@@ -147,7 +130,7 @@ void newAccountPrompts(std::string& fn, std::string& ln, std::string& user, std:
     std::cin >> passnum;
 }
 
-int getIntInput()
+int getIntInput(bool &flag)
 {
     std::string strInput;
     
@@ -156,7 +139,7 @@ int getIntInput()
 
     try {
         int intInput = stoi(strInput);
-        intInput = intInput;
+        flag = true;
         return intInput;
     }
     catch (const std::exception& e) {

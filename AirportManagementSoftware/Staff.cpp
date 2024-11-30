@@ -8,7 +8,7 @@ Staff::Staff(sql::Connection* existingCon, std::string user)
 
 Staff::~Staff()
 {
-	//
+    con = nullptr;
 }
 
 void Staff::displayOptions()

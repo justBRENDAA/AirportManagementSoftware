@@ -141,7 +141,6 @@
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Admin.h" />
     <ClInclude Include="Flight.h" />
     <ClInclude Include="Login.h" />
     <ClInclude Include="Luggage.h" />

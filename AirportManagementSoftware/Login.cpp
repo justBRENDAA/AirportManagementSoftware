@@ -83,6 +83,12 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
                     }
                     delete resPassenger;
                     delete pstmtPassenger;
+
+                    UserInterface u;
+                    u.displaySuccessfulLogin();
+                    std::cout << "Welcome, " << first_name << "!" << std::endl;
+
+                    handleUserType();
                 }
                 else if (user_type == "Staff") {
                     sql::PreparedStatement* pstmtStaff = con->prepareStatement(
@@ -97,10 +103,16 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
                     }
                     delete resStaff;
                     delete pstmtStaff;
+
+                    UserInterface u;
+                    u.displaySuccessfulLogin();
+                    std::cout << "Welcome, " << first_name << "!" << std::endl;
+
+                    handleUserType();
                 }
                 else if (user_type == "Security") {
                     sql::PreparedStatement* pstmtSecurity = con->prepareStatement(
-                        "SELECT sec.first_name FROM Security sec "                         // this connects users table and security table
+                        "SELECT sec.first_name FROM Security sec "                   // this connects users table and security table
                         "JOIN Users u ON u.user_id = sec.user_id "                   // uses username and user_id to establish connection
                         "WHERE u.username = ?"
                     );
@@ -111,6 +123,12 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
                     }
                     delete resSecurity;
                     delete pstmtSecurity;
+
+                    UserInterface u;
+                    u.displaySuccessfulLogin();
+                    std::cout << "Welcome, " << first_name << "!" << std::endl;
+
+                    handleUserType();
                 }
 
                 delete res;
@@ -183,27 +201,22 @@ bool Login::createAccount(const std::string& inputUsername, const std::string& i
     }
 }
 
-// delete an account from the database
-bool Login::deleteAccount(const std::string& inputUsername) {
-    if (con == nullptr) {
-        std::cerr << "No active database connection." << std::endl;
-        return false;
+void Login::handleUserType()
+{
+    if (user_type == "Passenger") {
+        Passenger p(con, username);
+        p.displayOptions();
     }
-
-    try {
-        sql::PreparedStatement* pstmt = con->prepareStatement(
-            "DELETE FROM Users WHERE username = ?"
-        );
-        pstmt->setString(1, inputUsername);
-
-        pstmt->executeUpdate();
-
-        delete pstmt;
-        return true;
+    else if (user_type == "Staff") {
+        Staff s(con, username);
+        s.displayOptions();
     }
-    catch (sql::SQLException& e) {
-        std::cerr << "Error during account deletion: " << e.what() << std::endl;
-        return false;
+    else if (user_type == "Security") {
+        Security s(con, username);
+        s.displayOptions();
+    }
+    else {
+        std::cout << "Unknown user type." << std::endl; // in case user type is wrong in database
     }
 }
 

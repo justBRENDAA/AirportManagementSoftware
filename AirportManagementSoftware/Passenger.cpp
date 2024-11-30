@@ -15,7 +15,7 @@ Passenger::Passenger(sql::Connection* existingCon, std::string user) {
 
 
 Passenger::~Passenger() {
-    // empty for now
+    con = nullptr;
 }
 
 
@@ -59,8 +59,6 @@ void Passenger::displayOptions()
 
     } while (!exitProgram && (userContinue == 'Y' || userContinue == 'y'));
 
-    if (userContinue == 'n' || userContinue == 'N')
-        std::cout << "Logging out. . .\n";
 }
 
 void Passenger::handleChoice(int c)
@@ -135,7 +133,7 @@ sql::Connection* Passenger::getConnection()
 int Passenger::getIntInput()
 {
     std::string strInput;
-    
+   
     std::cin >> strInput;
     std::cout << std::endl;
 

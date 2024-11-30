@@ -6,7 +6,6 @@
 #include <mysql_connection.h>
 #include "Flight.h"
 
-
 class Security {
 private:
 	sql::Connection* con = nullptr;

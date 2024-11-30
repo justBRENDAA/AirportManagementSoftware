@@ -1,48 +1,33 @@
-#ifndef ADMIN_H
-#define ADMIN_H
-
-#include <string>
-#include <mysql_driver.h>
-#include <mysql_connection.h>
-#include "Luggage.h"
-#include "SupportRequests.h"
-
-
-class Passenger {
-private:
-    // database connection object
-    sql::Connection* con;  // stores the database connection
-
-    std::string username;
-    std::string password;
-    std::string user_type;
-    std::string first_name;
-    std::string description;
-    int pass_id;
-    int choice;
-    int user_id;
-
-    //setters
-    void setChoice(const int& choice);
-
-
-public:
-    // Constructor
-    Passenger(sql::Connection* existingCon, std::string username);
-
-    void displayOptions();
-    void handleChoice(int c);
-    void checkFlightInformation();
-    void luggageInformation();
-    void requestSupport();
-    void viewSupportRequests();
-
-    // getters
-    int getChoice() const;
-    sql::Connection* getConnection();
-
-    // Destructor
-    ~Passenger();
-};
-
-#endif
+//#ifndef ADMIN_H
+//#define ADMIN_H
+//
+//#include <string>
+//#include <mysql_driver.h>
+//#include <mysql_connection.h>
+//
+//
+//class Admin {
+//private:
+//    sql::Connection* con;  
+//    std::string username;
+//    
+//    //setters
+//    void setChoice(const int& choice);
+//
+//public:
+//    // constructor
+//    Admin(sql::Connection* existingCon, std::string username);
+//
+//    void displayOptions();
+//    void handleChoice(int c);
+//    int getIntInput();
+//
+//    // getters
+//    int getChoice() const;
+//    sql::Connection* getConnection();
+//
+//    // Destructor
+//    ~Admin();
+//};
+//
+//#endif

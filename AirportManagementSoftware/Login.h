@@ -4,6 +4,10 @@
 #include <string>
 #include <mysql_driver.h>
 #include <mysql_connection.h>
+#include "Passenger.h"
+#include "Staff.h"
+#include "Security.h"
+#include "UserInterface.h"
 
 class Login {
 private:
@@ -36,8 +40,7 @@ public:
     
     bool createAccount(const std::string& username, const std::string& password, const std::string& phone_num, const std::string& email, 
                        const std::string& first_name, const std::string& last_name, const std::string& passport_num);
-    
-    bool deleteAccount(const std::string& username);
+    void handleUserType();
    
     // getter functions
     std::string getUserType() const;           
