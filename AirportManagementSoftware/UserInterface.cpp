@@ -14,6 +14,7 @@ void UserInterface::displaySuccessfulLogin() {
 
 void UserInterface::displayUnsuccessfulLogin() {
     std::cout << "\nLogin failed!" << std::endl;
+    
     // Give the user options if login fails
     std::cout << "Choose an option: " << std::endl;
     std::cout << "1. Try logging in again" << std::endl;
