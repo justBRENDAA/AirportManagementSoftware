@@ -71,7 +71,35 @@ void Security::handleChoice(int c)
 
 void Security::logSecurityThreat()
 {
-    
+    std::string description;
+    int threatLevel;
+    std::string location;
+
+    // threat details from security member
+    std::cout << "Enter threat description: ";
+    std::cin.ignore();
+    std::getline(std::cin, description);
+
+    std::cout << "Enter threat level (1-5): ";
+    std::cin >> threatLevel;
+
+    std::cout << "Enter location of threat: ";
+    std::cin.ignore();
+    std::getline(std::cin, location);
+
+    sql::PreparedStatement* pstmt = con->prepareStatement(
+        "INSERT INTO Threats (description, threat_level, location) VALUES (?, ?, ?)"
+    );
+
+    pstmt->setString(1, description);  // pass description
+    pstmt->setInt(2, threatLevel);     // pass threat level
+    pstmt->setString(3, location);     // pass location
+
+    pstmt->executeUpdate();
+
+    delete pstmt;
+
+    std::cout << "\nThreat was logged successfully.";
 }
 
 void Security::viewThreatList()

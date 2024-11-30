@@ -13,16 +13,16 @@ private:
 	int choice = -1;
 
 	void setChoice(const int& choice);
-
-public:
-	Security(sql::Connection* con, std::string user);
-
-	void displayOptions();
 	void handleChoice(int c);
 	void logSecurityThreat();
 	void viewThreatList();
 	void viewFlightInformation();
 
+public:
+	Security(sql::Connection* con, std::string user);
+
+	void displayOptions();
+	
 	int getChoice() const;
 	sql::Connection* getConnection();
 };
