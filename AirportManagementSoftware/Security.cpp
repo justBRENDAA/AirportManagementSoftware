@@ -24,7 +24,7 @@ void Security::displayOptions()
         int selection;
 
         do {
-            std::cin >> selection;
+            selection = getIntInput();
             setChoice(selection);
 
             if (getChoice() == -1)
@@ -65,7 +65,7 @@ void Security::handleChoice(int c)
         viewFlightInformation();
     }
     else if (choice == 4) {
-        std::cout << "\nLogging out . . . \n";
+        //std::cout << "\nLogging out . . . \n";
     }
 }
 
@@ -157,4 +157,21 @@ int Security::getChoice() const
 sql::Connection* Security::getConnection()
 {
 	return con;
+}
+
+int Security::getIntInput()
+{
+    std::string strInput;
+
+    std::cin >> strInput;
+    std::cout << std::endl;
+
+    try {
+        int intInput = stoi(strInput);
+        intInput = intInput;
+        return intInput;
+    }
+    catch (const std::exception& e) {
+        std::cout << "Value entered must be an integer.\n";
+    }
 }

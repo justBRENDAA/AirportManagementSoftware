@@ -87,11 +87,20 @@ void Staff::viewClosedTickets()
     sup.viewAllClosedTickets();
 }
 
+
+
+
 void Staff::updateOpenTickets()
 {
     SupportRequests sup(con, username);
     sup.updateRequestStatus();
 }
+
+
+
+
+
+
 
 void Staff::viewFlightInformationReport()
 {

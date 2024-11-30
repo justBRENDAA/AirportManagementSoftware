@@ -141,6 +141,7 @@
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Admin.h" />
     <ClInclude Include="Flight.h" />
     <ClInclude Include="Login.h" />
     <ClInclude Include="Luggage.h" />
@@ -149,6 +150,9 @@
     <ClInclude Include="Staff.h" />
     <ClInclude Include="SupportRequests.h" />
     <ClInclude Include="UserInterface.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

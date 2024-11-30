@@ -7,6 +7,7 @@
 #include <iostream>
 
 void newAccountPrompts(std::string& fn, std::string& ln, std::string& user, std::string& pass, std::string& phone, std::string& email, std::string& passnum);
+int getIntInput();
 
 int main() {
     UserInterface ui;  // create a UserInterface object to handle displaying prompts and collecting input
@@ -20,7 +21,7 @@ int main() {
     std::cout << "2. Create a new account" << std::endl;
     std::cout << "3. Exit the program" << std::endl;
         
-    std::cin >> option;
+    option = getIntInput();
     std::cout << "\n";
         
     switch (option) {
@@ -102,7 +103,6 @@ int main() {
             std::string first_name, last_name, username, password, phone_number, email, passport_num;
             newAccountPrompts(first_name, last_name, username, password, phone_number, email, passport_num);
 
-
             // Call createAccount from Login class to register the user 
             // (this only creates passenger login. For staff/security admin will add them in the database and provde credentials)
             if (login.createAccount(username, password, phone_number, email, first_name, last_name, passport_num)) {
@@ -145,4 +145,21 @@ void newAccountPrompts(std::string& fn, std::string& ln, std::string& user, std:
     std::cin >> email;
     std::cout << "Enter your passport number: ";
     std::cin >> passnum;
+}
+
+int getIntInput()
+{
+    std::string strInput;
+    
+    std::cin >> strInput;
+    std::cout << std::endl;
+
+    try {
+        int intInput = stoi(strInput);
+        intInput = intInput;
+        return intInput;
+    }
+    catch (const std::exception& e) {
+        std::cout << "Value entered must be an integer.\n";
+    }
 }

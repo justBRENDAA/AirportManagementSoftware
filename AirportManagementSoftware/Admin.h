@@ -1,5 +1,5 @@
-#ifndef PASSENGER_H
-#define PASSENGER_H
+#ifndef ADMIN_H
+#define ADMIN_H
 
 #include <string>
 #include <mysql_driver.h>
@@ -36,8 +36,6 @@ public:
     void luggageInformation();
     void requestSupport();
     void viewSupportRequests();
-
-    int getIntInput();
 
     // getters
     int getChoice() const;

@@ -125,10 +125,12 @@ void SupportRequests::viewAllOpenTickets()
             std::cout << "Description: " << res->getString("description") << "\n";
             std::cout << "Status: " << res->getString("status") << "\n";
             std::cout << "------------------------------\n";
+            
+            supportRequestsExist = true;
         }
 
         if (!hasOpenTickets) {
-            std::cout << "No suport tickets found with Resolved status.\n";
+            std::cout << "No suport tickets found with Pending or Escalated status.\n";
         }
 
         delete res;
@@ -183,69 +185,88 @@ void SupportRequests::updateRequestStatus()
 
     viewAllOpenTickets();
 
-    // SQL QUERY TO GET THE OPEN REQUESTS
-    sql::PreparedStatement* stmt = con->prepareStatement(
-        "SELECT request_id FROM SupportRequests WHERE status = 'Pending' OR status = 'Escalated'"
-    );
+    if (supportRequestsExist)
+    {
+        // SQL QUERY TO GET THE OPEN REQUESTS
+        sql::PreparedStatement* stmt = con->prepareStatement(
+            "SELECT request_id FROM SupportRequests WHERE status = 'Pending' OR status = 'Escalated'"
+        );
 
-    sql::ResultSet* res = stmt->executeQuery();
+        sql::ResultSet* res = stmt->executeQuery();
 
-    // vector holds all valid request ids
-    std::vector<int> openRequests;
+        // vector holds all valid request ids
+        std::vector<int> openRequests;
 
-    // add all request ids from sql query results
-    while (res->next()) {
-        openRequests.push_back(res->getInt("request_id"));
-    }
+        // add all request ids from sql query results
+        while (res->next()) {
+            openRequests.push_back(res->getInt("request_id"));
+        }
 
-    // delete ptrs
-    delete res;
-    delete stmt;
+        // delete ptrs
+        delete res;
+        delete stmt;
+        
+        
+        std::cout << "\nEnter request id you will modify: ";
+        getIntInput();
 
+        // check that request id staff input is valid
+        auto it = std::find(openRequests.begin(), openRequests.end(), req_id);
 
-    std::cout << "\nEnter request id you will modify: ";
-    std::cin >> req_id;
+        if (it != openRequests.end()) {
+            std::string newStatus;
+            std::cout << "Enter new status (Resolved, Pending, Escalated): ";
+            std::cin >> newStatus;
 
-    // check that request id staff input is valid
-    auto it = std::find(openRequests.begin(), openRequests.end(), req_id);
+            // Define valid statuses as an array
+            const std::string validStatuses[] = { "Resolved", "Pending", "Escalated" };
+            bool isValidStatus = false;
 
-    if (it != openRequests.end()) {
-        std::string newStatus;
-        std::cout << "Enter new status (Resolved, Pending, Escalated): ";
-        std::cin >> newStatus;
+            // Check if the entered status is valid
+            for (const auto& status : validStatuses) {
+                if (newStatus == status) {
+                    isValidStatus = true;
+                    break;
+                }
+            }
 
-        // Define valid statuses as an array
-        const std::string validStatuses[] = { "Resolved", "Pending", "Escalated" };
-        bool isValidStatus = false;
+            if (isValidStatus) {
+                sql::PreparedStatement* support_pstmt = con->prepareStatement(    // query updates 
+                    "UPDATE SupportRequests SET status = ? WHERE request_id = ?"  // support status 
+                );
+                support_pstmt->setString(1, newStatus);
+                support_pstmt->setInt(2, req_id);
 
-        // Check if the entered status is valid
-        for (const auto& status : validStatuses) {
-            if (newStatus == status) {
-                isValidStatus = true;
-                break;
+                support_pstmt->executeUpdate();                            // execute the query
+
+                // delete pointers
+                delete support_pstmt;
+
+                std::cout << "Request ID " << req_id << " status updated to " << newStatus << ".\n";
+            }
+            else {
+                std::cout << "Invalid status entered.\n";
             }
         }
-
-        if (isValidStatus) {
-            sql::PreparedStatement* support_pstmt = con->prepareStatement(    // query updates 
-                "UPDATE SupportRequests SET status = ? WHERE request_id = ?"  // support status 
-            );
-            support_pstmt->setString(1, newStatus);                         
-            support_pstmt->setInt(2, req_id);     
-
-            support_pstmt->executeUpdate();                            // execute the query
-
-            // delete pointers
-            delete support_pstmt;
-
-            std::cout << "Request ID " << req_id << " status updated to " << newStatus << ".\n";
-        }
         else {
-            std::cout << "Invalid status entered.\n";
+            std::cout << "\nThe request ID entered is NOT in the list of open requests.\n";
         }
     }
-    else {
-        std::cout << "Request ID " << req_id << " is NOT in the list of open requests.\n";
+}
+
+void SupportRequests::getIntInput()
+{
+    std::string strInput;
+
+    std::cin >> strInput;
+    std::cout << std::endl;
+
+    try {
+        int intInput = stoi(strInput);
+        req_id = intInput;
+    }
+    catch(const std::exception& e){
+        std::cout << "Value entered must be an integer.\n";
     }
 }
 

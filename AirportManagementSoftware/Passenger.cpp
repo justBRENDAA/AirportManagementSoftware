@@ -35,7 +35,7 @@ void Passenger::displayOptions()
         int selection;
 
         do {
-            std::cin >> selection;
+            selection = getIntInput();
             setChoice(selection);
 
             if (getChoice() == -1)
@@ -129,4 +129,22 @@ int Passenger::getChoice() const
 sql::Connection* Passenger::getConnection()
 {
     return con;
+}
+
+
+int Passenger::getIntInput()
+{
+    std::string strInput;
+    
+    std::cin >> strInput;
+    std::cout << std::endl;
+
+    try {
+        int intInput = stoi(strInput);
+        intInput = intInput;
+        return intInput;
+    }
+    catch (const std::exception& e) {
+        std::cout << "Value entered must be an integer.\n";
+    }
 }

@@ -23,6 +23,7 @@ public:
 	Security(sql::Connection* con, std::string user);
 
 	void displayOptions();
+	int getIntInput();
 	
 	int getChoice() const;
 	sql::Connection* getConnection();
