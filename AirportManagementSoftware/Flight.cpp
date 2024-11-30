@@ -51,26 +51,53 @@ void Flight::displayInfo()
 
 void Flight::displayFlightReport()
 {
-    std::cout << "\n AVAILABLE FLIGHTS\n";
-    std::cout << "=======================\n";
+    std::cout << " \n  FLIGHT PASSENGER REPORT\n";
+    std::cout << "=============================\n";
 
-    sql::PreparedStatement* flight_pstmt = con->prepareStatement(
-        "SELECT flight_number FROM Flights;"
+    sql::PreparedStatement* flightNum_pstmt = con->prepareStatement(
+        "SELECT f.flight_number "                        // get flight number from flights table
+        "FROM Flights f;"
     );
+    sql::ResultSet* flightNum_results = flightNum_pstmt->executeQuery();
 
-    sql::ResultSet* flight_res = flight_pstmt ->executeQuery();
+    // the while will run through the flight ids and use them to display their data
+    while (flightNum_results->next()) {
+        std::string flightNumber = flightNum_results->getString("flight_number");
 
-    std::vector<std::string> flightNumbers;
+        std::cout << "\n   Flight Number: " << flightNumber << "\n";
+        std::cout << "===============================\n";
 
-    // store/display all flight numbers
-    while (flight_res ->next()) {
-        std::string flightNumber = flight_res ->getString("flight_number");
-        std::cout << "  " << flightNumber << "\n";
-        flightNumbers.push_back(flightNumber);
+        sql::PreparedStatement* passengers_pstmt = con->prepareStatement(
+            "SELECT p.first_name, p.last_name, p.passport_number "          
+            "FROM Passengers p "                                            
+            "JOIN PassengerFlight pf ON p.passenger_id = pf.passenger_id "  // basically saying to take each passenger and match it with a flight using passenger id
+            "JOIN Flights f ON pf.flight_id = f.flight_id "                 // then we take the linked passengers and match it to the flight using flight id
+            "WHERE f.flight_number = ?;"                                    // then we only show the ones with flight number equal to ? 
+        );
+
+        passengers_pstmt->setString(1, flightNumber);  // Set the flight number
+        sql::ResultSet* passengerRes = passengers_pstmt->executeQuery();
+
+        bool hasPassengers = false;
+        // loop through all the passaners if we get a results list
+        while (passengerRes->next()) {
+            std::string firstName = passengerRes->getString("first_name");
+            std::string lastName = passengerRes->getString("last_name");
+            std::string passportNumber = passengerRes->getString("passport_number");
+
+            std::cout << firstName << " " << lastName << " | Passport: " << passportNumber << "\n";
+            hasPassengers = true;
+        }
+
+        if (!hasPassengers) {
+            std::cout << "No passengers found for this flight.\n";
+        }
+
+        delete passengerRes;
+        delete passengers_pstmt;
     }
 
-    // promt user to select a flight to get info abt
-    std::string selectedFlight;
-    std::cout << "\nEnter the flight number you want to view details for: ";
-    std::cin >> selectedFlight;
+    delete flightNum_pstmt; // Clean up the flight query statement
+    delete flightNum_results;     // Clean up the flight result set
+
 }
