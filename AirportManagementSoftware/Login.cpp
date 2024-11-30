@@ -107,7 +107,7 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
                     pstmtSecurity->setString(1, inputUsername);
                     sql::ResultSet* resSecurity = pstmtSecurity->executeQuery();
                     if (resSecurity->next()) {
-                        setUserFirstName(resSecurity->getString("name")); // Security table uses 'name' instead of 'first_name'
+                        setUserFirstName(resSecurity->getString("first_name")); // Security table now uses 'first_name'
                     }
                     delete resSecurity;
                     delete pstmtSecurity;
