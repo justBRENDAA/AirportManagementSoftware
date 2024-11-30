@@ -103,5 +103,5 @@ void Flight::displayFlightReport()
 
     delete flightNum_pstmt; 
     delete flightNum_results;    
-
+    std::cout << "\n";
 }

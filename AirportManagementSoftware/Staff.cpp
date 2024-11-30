@@ -22,7 +22,7 @@ void Staff::displayOptions()
         std::cout << "2. View Closed Support Tickets" << std::endl;
         std::cout << "3. Update Support Ticket Status" << std::endl;
         std::cout << "4. View Flight Information Report" << std::endl;
-        std::cout << "5. Exit Program" << std::endl;
+        std::cout << "5. Log Out" << std::endl;
 
         int selection;
 
@@ -51,7 +51,7 @@ void Staff::displayOptions()
     } while (!exitProgram && (userContinue == 'Y' || userContinue == 'y'));
 
     if (userContinue == 'n' || userContinue == 'N')
-        std::cout << "Exiting the program. . .\n";
+        std::cout << "Logging out. . .\n";
 }
 
 void Staff::handleChoice(int c)
@@ -71,7 +71,7 @@ void Staff::handleChoice(int c)
         viewFlightInformationReport();
     }
     else if (choice == 5) {
-        std::cout << "\nExiting program . . . \n";
+        std::cout << "\nLogging out . . . \n";
     }
 }
 

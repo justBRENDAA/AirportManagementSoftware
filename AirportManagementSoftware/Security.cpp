@@ -19,7 +19,7 @@ void Security::displayOptions()
         std::cout << "1. Log Security Threat" << std::endl;
         std::cout << "2. View Security Threat List" << std::endl;
         std::cout << "3. View Flight Information" << std::endl;
-        std::cout << "4. Exit Program" << std::endl;
+        std::cout << "4. Log Out" << std::endl;
 
         int selection;
 
@@ -28,19 +28,19 @@ void Security::displayOptions()
             setChoice(selection);
 
             if (getChoice() == -1)
-                std::cout << "Please select a valid option(1-5): ";
+                std::cout << "Please select a valid option(1-4): ";
         } while (getChoice() == -1);
 
         handleChoice(getChoice());
 
-        if (getChoice() == 5) {
+        if (getChoice() == 4) {
             exitProgram = true;
         }
 
         if (!exitProgram)
         {
             do {
-                std::cout << "Would you like select another Passenger option (Y/N)? ";
+                std::cout << "Would you like select another Security option (Y/N)? ";
                 std::cin >> userContinue;
                 std::cout << std::endl;
             } while (userContinue != 'Y' && userContinue != 'y' && userContinue != 'N' && userContinue != 'n');
@@ -49,7 +49,7 @@ void Security::displayOptions()
     } while (!exitProgram && (userContinue == 'Y' || userContinue == 'y'));
 
     if (userContinue == 'n' || userContinue == 'N')
-        std::cout << "Exiting the program. . .\n";
+        std::cout << "Logging out. . .\n";
 }
 
 void Security::handleChoice(int c)
@@ -65,7 +65,7 @@ void Security::handleChoice(int c)
         viewFlightInformation();
     }
     else if (choice == 4) {
-        std::cout << "\nExiting program . . . \n";
+        std::cout << "\nLogging out . . . \n";
     }
 }
 
@@ -76,7 +76,7 @@ void Security::logSecurityThreat()
     std::string location;
 
     // threat details from security member
-    std::cout << "Enter threat description: ";
+    std::cout << "\nEnter threat description: ";
     std::cin.ignore();
     std::getline(std::cin, description);
 
@@ -99,22 +99,51 @@ void Security::logSecurityThreat()
 
     delete pstmt;
 
-    std::cout << "\nThreat logged successfully.";
+    std::cout << "\nThreat logged successfully.\n\n";
 }
 
 void Security::viewThreatList()
 {
+    sql::PreparedStatement* pstmt = con->prepareStatement(
+        "SELECT threat_id, description, threat_level, location, timestamp FROM Threats"
+    );
 
+    sql::ResultSet* res = pstmt->executeQuery();
+
+    std::cout << "\n   THREATS LIST\n";
+    std::cout << "======================\n";
+
+    // while loop will traverse through every output line
+    while (res->next()) {
+        // set the values
+        int threat_id = res->getInt("threat_id");
+        std::string description = res->getString("description");
+        int threat_level = res->getInt("threat_level");
+        std::string location = res->getString("location");
+        std::string timestamp = res->getString("timestamp");
+
+        // print the info
+        std::cout << "Threat ID: " << threat_id << "\n";
+        std::cout << "Description: " << description << "\n";
+        std::cout << "Threat Level: " << threat_level << "\n";
+        std::cout << "Location: " << location << "\n";
+        std::cout << "Timestamp: " << timestamp << "\n";
+        std::cout << "----------------------------------------\n\n";
+    }
+
+    delete res;
+    delete pstmt;
 }
 
 void Security::viewFlightInformation()
 {
-
+    Flight f(con, username);
+    f.displayFlightReport();
 }
 
 void Security::setChoice(const int& c)
 {
-    if (c >= 1 && c <= 5)
+    if (c >= 1 && c <= 4)
         choice = c;
     else
         choice = -1;

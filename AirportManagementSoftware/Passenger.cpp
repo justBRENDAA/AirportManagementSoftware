@@ -30,7 +30,7 @@ void Passenger::displayOptions()
         std::cout << "2. Display Luggage Information" << std::endl;
         std::cout << "3. Request Support" << std::endl;
         std::cout << "4. View Your Support Requests" << std::endl;
-        std::cout << "5. Exit Program" << std::endl;
+        std::cout << "5. Log Out" << std::endl;
 
         int selection;
 
@@ -60,7 +60,7 @@ void Passenger::displayOptions()
     } while (!exitProgram && (userContinue == 'Y' || userContinue == 'y'));
 
     if (userContinue == 'n' || userContinue == 'N')
-        std::cout << "Exiting the program. . .\n";
+        std::cout << "Logging out. . .\n";
 }
 
 void Passenger::handleChoice(int c)
@@ -79,7 +79,7 @@ void Passenger::handleChoice(int c)
         viewSupportRequests();
     }
     else if (choice == 5) {
-        std::cout << "\nExiting program . . . \n";
+        std::cout << "\nLogging out . . . \n";
     }
 }
 

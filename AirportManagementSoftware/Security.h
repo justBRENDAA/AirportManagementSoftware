@@ -4,6 +4,7 @@
 #include <string>
 #include <mysql_driver.h>
 #include <mysql_connection.h>
+#include "Flight.h"
 
 
 class Security {
