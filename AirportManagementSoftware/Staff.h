@@ -24,6 +24,8 @@ public:
     void updateOpenTickets();
     void viewFlightInformationReport();
 
+    int getIntInput();
+
     //setters
     void setChoice(const int& choice);
 

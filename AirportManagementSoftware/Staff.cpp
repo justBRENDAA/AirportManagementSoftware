@@ -27,7 +27,7 @@ void Staff::displayOptions()
         int selection;
 
         do {
-            std::cin >> selection;
+            selection = getIntInput();
             setChoice(selection);
 
             if (getChoice() == -1)
@@ -71,7 +71,7 @@ void Staff::handleChoice(int c)
         viewFlightInformationReport();
     }
     else if (choice == 5) {
-        std::cout << "\nLogging out . . . \n";
+        // std::cout << "\nLogging out . . . \n";
     }
 }
 
@@ -87,19 +87,11 @@ void Staff::viewClosedTickets()
     sup.viewAllClosedTickets();
 }
 
-
-
-
 void Staff::updateOpenTickets()
 {
     SupportRequests sup(con, username);
     sup.updateRequestStatus();
 }
-
-
-
-
-
 
 
 void Staff::viewFlightInformationReport()
@@ -124,4 +116,22 @@ int Staff::getChoice() const
 sql::Connection* Staff::getConnection()
 {
     return con;
+}
+
+
+int Staff::getIntInput()
+{
+    std::string strInput;
+
+    std::cin >> strInput;
+    std::cout << std::endl;
+
+    try {
+        int intInput = stoi(strInput);
+        intInput = intInput;
+        return intInput;
+    }
+    catch (const std::exception& e) {
+        std::cout << "Value entered must be an integer.\n";
+    }
 }
