@@ -5,6 +5,7 @@
 #include <mysql_driver.h>
 #include <mysql_connection.h>
 #include "SupportRequests.h"
+#include "Flight.h"
 
 class Staff {
 private:
@@ -19,6 +20,7 @@ public:
     void displayOptions();
     void handleChoice(int c);
     void viewOpenTickets();
+    void viewClosedTickets();
     void updateOpenTickets();
     void viewFlightInformationReport();
 

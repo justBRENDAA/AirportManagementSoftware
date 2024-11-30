@@ -19,9 +19,10 @@ void Staff::displayOptions()
         std::cout << "\n   STAFF OPTIONS " << std::endl;
         std::cout << "=====================" << std::endl;
         std::cout << "1. View Open Support Tickets" << std::endl;
-        std::cout << "2. Update Support Ticket Status" << std::endl;
-        std::cout << "3. View Flight Information Report" << std::endl;
-        std::cout << "4. Exit Program" << std::endl;
+        std::cout << "2. View Closed Support Tickets" << std::endl;
+        std::cout << "3. Update Support Ticket Status" << std::endl;
+        std::cout << "4. View Flight Information Report" << std::endl;
+        std::cout << "5. Exit Program" << std::endl;
 
         int selection;
 
@@ -30,12 +31,12 @@ void Staff::displayOptions()
             setChoice(selection);
 
             if (getChoice() == -1)
-                std::cout << "Please select a valid option(1-4): ";
+                std::cout << "Please select a valid option(1-5): ";
         } while (getChoice() == -1);
 
         handleChoice(getChoice());
 
-        if (getChoice() == 4) {
+        if (getChoice() == 5) {
             exitProgram = true;
         }
 
@@ -48,6 +49,9 @@ void Staff::displayOptions()
             } while (userContinue != 'Y' && userContinue != 'y' && userContinue != 'N' && userContinue != 'n');
         }
     } while (!exitProgram && (userContinue == 'Y' || userContinue == 'y'));
+
+    if (userContinue == 'n' || userContinue == 'N')
+        std::cout << "Exiting the program. . .\n";
 }
 
 void Staff::handleChoice(int c)
@@ -56,13 +60,17 @@ void Staff::handleChoice(int c)
         viewOpenTickets();
         std::cout << "";
     }
-    else if (choice == 2) {
-        updateOpenTickets();
+    if (choice == 2) {
+        viewClosedTickets();
+        std::cout << "";
     }
     else if (choice == 3) {
-        viewFlightInformationReport();
+        updateOpenTickets();
     }
     else if (choice == 4) {
+        viewFlightInformationReport();
+    }
+    else if (choice == 5) {
         std::cout << "\nExiting program . . . \n";
     }
 }
@@ -73,9 +81,16 @@ void Staff::viewOpenTickets()
     sup.viewAllOpenTickets();
 }
 
+void Staff::viewClosedTickets()
+{
+    SupportRequests sup(con, username);
+    sup.viewAllClosedTickets();
+}
+
 void Staff::updateOpenTickets()
 {
-    //
+    SupportRequests sup(con, username);
+    sup.updateRequestStatus();
 }
 
 void Staff::viewFlightInformationReport()
@@ -85,7 +100,7 @@ void Staff::viewFlightInformationReport()
 
 void Staff::setChoice(const int& c)
 {
-    if (c >= 1 && c <= 4)
+    if (c >= 1 && c <= 5)
         choice = c;
     else
         choice = -1;

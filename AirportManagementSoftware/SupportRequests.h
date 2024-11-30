@@ -12,6 +12,7 @@ private:
 	std::string username = "";
 	std::string supportRequestDescription = "";
 	int pass_id = -1;
+	int req_id = -1;
 
 public:
 	SupportRequests(sql::Connection* con, std::string user);

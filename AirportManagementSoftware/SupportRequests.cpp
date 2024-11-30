@@ -2,6 +2,7 @@
 #include <cppconn/prepared_statement.h>
 #include <cppconn/resultset.h>
 #include <iostream>
+#include <vector>
 
 
 SupportRequests::SupportRequests(sql::Connection* existingCon, std::string user)
@@ -115,7 +116,7 @@ void SupportRequests::viewAllOpenTickets()
         sql::ResultSet* res = pstmt->executeQuery();
 
         std::cout << "\n  ALL OPEN SUPPORT TICKETS";
-        std::cout << "==============================\n";
+        std::cout << "\n==============================\n";
 
         bool hasOpenTickets = false; // flag to check if there is any tickets
         while (res->next()) {
@@ -128,7 +129,7 @@ void SupportRequests::viewAllOpenTickets()
         }
 
         if (!hasOpenTickets) {
-            std::cout << "No open support tickets found with Pending or Escalated status.\n";
+            std::cout << "No suport tickets found with Resolved status.\n";
         }
 
         delete res;
@@ -141,10 +142,112 @@ void SupportRequests::viewAllOpenTickets()
 
 void SupportRequests::viewAllClosedTickets()
 {
+    try {
+        // this query selects all tickets with resolved status
+        sql::PreparedStatement* pstmt = con->prepareStatement(
+            "SELECT request_id, passenger_id, description, status "
+            "FROM Supportrequests "
+            "WHERE status = 'Resolved'"
+        );
+
+        sql::ResultSet* res = pstmt->executeQuery();
+
+        std::cout << "\n  ALL CLOSED SUPPORT TICKETS";
+        std::cout << "\n================================\n";
+
+        bool hasOpenTickets = false; // flag to check if there is any tickets
+        while (res->next()) {
+            hasOpenTickets = true;
+            std::cout << "Request ID: " << res->getInt("request_id") << "\n";
+            std::cout << "Passenger ID: " << res->getInt("passenger_id") << "\n";
+            std::cout << "Description: " << res->getString("description") << "\n";
+            std::cout << "Status: " << res->getString("status") << "\n";
+            std::cout << "------------------------------\n";
+        }
+
+        if (!hasOpenTickets) {
+            std::cout << "No support tickets found with Resolved status.\n";
+        }
+
+        delete res;
+        delete pstmt;
+    }
+    catch (sql::SQLException& e) {
+        std::cerr << "Error retrieving open support tickets: " << e.what() << std::endl;
+    }
 }
 
 void SupportRequests::updateRequestStatus()
 {
+    std::cout << "\n  UPDATE SUPPORT TICKET STATUS \n";
+    std::cout << "====================================\n";
+
+    viewAllOpenTickets();
+
+    // SQL QUERY TO GET THE OPEN REQUESTS
+    sql::PreparedStatement* stmt = con->prepareStatement(
+        "SELECT request_id FROM SupportRequests WHERE status = 'Pending' OR status = 'Escalated'"
+    );
+
+    sql::ResultSet* res = stmt->executeQuery();
+
+    // vector holds all valid request ids
+    std::vector<int> openRequests;
+
+    // add all request ids from sql query results
+    while (res->next()) {
+        openRequests.push_back(res->getInt("request_id"));
+    }
+
+    // delete ptrs
+    delete res;
+    delete stmt;
+
+
+    std::cout << "\nEnter request id you will modify: ";
+    std::cin >> req_id;
+
+    // check that request id staff input is valid
+    auto it = std::find(openRequests.begin(), openRequests.end(), req_id);
+
+    if (it != openRequests.end()) {
+        std::string newStatus;
+        std::cout << "Enter new status (Resolved, Pending, Escalated): ";
+        std::cin >> newStatus;
+
+        // Define valid statuses as an array
+        const std::string validStatuses[] = { "Resolved", "Pending", "Escalated" };
+        bool isValidStatus = false;
+
+        // Check if the entered status is valid
+        for (const auto& status : validStatuses) {
+            if (newStatus == status) {
+                isValidStatus = true;
+                break;
+            }
+        }
+
+        if (isValidStatus) {
+            sql::PreparedStatement* support_pstmt = con->prepareStatement(    // query updates 
+                "UPDATE SupportRequests SET status = ? WHERE request_id = ?"  // support status 
+            );
+            support_pstmt->setString(1, newStatus);                         
+            support_pstmt->setInt(2, req_id);     
+
+            support_pstmt->executeUpdate();                            // execute the query
+
+            // delete pointers
+            delete support_pstmt;
+
+            std::cout << "Request ID " << req_id << " status updated to " << newStatus << ".\n";
+        }
+        else {
+            std::cout << "Invalid status entered or status is the same as the current one.\n";
+        }
+    }
+    else {
+        std::cout << "Request ID " << req_id << " is NOT in the list of open requests.\n";
+    }
 }
 
 sql::Connection* SupportRequests::getConnection()

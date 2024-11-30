@@ -58,6 +58,9 @@ void Passenger::displayOptions()
         }
 
     } while (!exitProgram && (userContinue == 'Y' || userContinue == 'y'));
+
+    if (userContinue == 'n' || userContinue == 'N')
+        std::cout << "Exiting the program. . .\n";
 }
 
 void Passenger::handleChoice(int c)

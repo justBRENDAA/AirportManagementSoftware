@@ -46,7 +46,6 @@ int main() {
                 if (userType == "Passenger") {
                     Passenger p(login.getConnection(), username);
                     p.displayOptions();
-                    
                 }
                 else if (userType == "Staff") {
                     Staff s(login.getConnection(), username);
