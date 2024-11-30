@@ -15,7 +15,7 @@ int main() {
 
     // Initial menu: Login, Create Account, or Exit
     
-    std::cout << "Welcome to the system.Choose an option : " << std::endl;
+    std::cout << "Welcome to the system. Choose an option : " << std::endl;
     std::cout << "1. Login" << std::endl;
     std::cout << "2. Create a new account" << std::endl;
     std::cout << "3. Exit the program" << std::endl;
@@ -106,7 +106,8 @@ int main() {
             // Call createAccount from Login class to register the user 
             // (this only creates passenger login. For staff/security admin will add them in the database and provde credentials)
             if (login.createAccount(username, password, phone_number, email, first_name, last_name, passport_num)) {
-                std::cout << "Account successfully created!" << std::endl;
+                std::cout << "\nAccount successfully created!\n" << std::endl;
+                return main(); // restarts program so user can select to login or exit
             }
             else {
                 std::cout << "\nError creating account." << std::endl;
@@ -115,12 +116,13 @@ int main() {
         }
         // exit the program
         case 3: {
-            std::cout << "\nExiting the program." << std::endl;
+            std::cout << "Exiting the program. . ." << std::endl;
             break;
         }
         // invalid choice
         default: {
-            std::cout << "Invalid choice. Please choose again." << std::endl;
+            std::cout << "Invalid choice. Try again.\n" << std::endl;
+            return main();
             break;
         }
     }
