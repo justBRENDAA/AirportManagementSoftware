@@ -99,7 +99,7 @@ void Security::logSecurityThreat()
 
     delete pstmt;
 
-    std::cout << "\nThreat was logged successfully.";
+    std::cout << "\nThreat logged successfully.";
 }
 
 void Security::viewThreatList()

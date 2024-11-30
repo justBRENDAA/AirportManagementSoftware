@@ -2,6 +2,7 @@
 #include "Login.h"
 #include "Passenger.h" 
 #include "Staff.h"
+#include "Security.h"
 
 #include <iostream>
 
@@ -52,11 +53,8 @@ int main() {
                     s.displayOptions();
                 }
                 else if (userType == "Security") {
-                    std::cout << "\nOptions for security: " << std::endl;
-                    std::cout << "1. Log Security Threat" << std::endl;
-                    std::cout << "2. View Security Threat List" << std::endl;
-                    std::cout << "3. View Flight Information" << std::endl;
-                    std::cout << "3. Exit Program" << std::endl;
+                    Security s(login.getConnection(), username);
+                    s.displayOptions();
                 }
                 else {
                     std::cout << "Unknown user type." << std::endl; // in case user type is wrong in database

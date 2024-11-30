@@ -100,7 +100,7 @@ bool Login::login(const std::string& inputUsername, const std::string& inputPass
                 }
                 else if (user_type == "Security") {
                     sql::PreparedStatement* pstmtSecurity = con->prepareStatement(
-                        "SELECT sec.name FROM Security sec "                         // this connects users table and security table
+                        "SELECT sec.first_name FROM Security sec "                         // this connects users table and security table
                         "JOIN Users u ON u.user_id = sec.user_id "                   // uses username and user_id to establish connection
                         "WHERE u.username = ?"
                     );
