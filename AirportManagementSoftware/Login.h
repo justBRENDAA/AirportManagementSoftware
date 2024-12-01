@@ -28,7 +28,7 @@ private:
     // private because they should not be changed after object creation
 
     void setUserType(const std::string& type); // setter for user_type
-    void setUserFirstName(const std::string& type); // setter for user_type
+    void setUserFirstName(const std::string& name); // setter for user_type
     void setUserID(const int& id); // setter for user_type
 
 public:
