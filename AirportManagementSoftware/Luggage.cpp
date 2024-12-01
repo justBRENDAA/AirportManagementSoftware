@@ -37,7 +37,7 @@ void Luggage::displayInfo()
         std::cout << "Location: " << location << std::endl;
 
         std::cout << "\nFor information regarding exact luggage location\n"
-                  << "visit our Luggage Kiosk and enter the luggage ID";
+                  << "visit our Luggage Kiosk and enter the luggage ID\n\n";
     }
     else {
         std::cout << "\nYou don't have a flight ticket.\n"

@@ -23,7 +23,7 @@ int main() {
     
     bool validOption = false;   
     option = getIntInput(validOption);
-    std::cout << "\n";
+    
     
     if(validOption)
     {

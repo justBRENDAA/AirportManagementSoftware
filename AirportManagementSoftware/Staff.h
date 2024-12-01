@@ -18,7 +18,7 @@ public:
     ~Staff();
 
     void displayOptions();
-    void handleChoice(int c);
+    void handleChoice(int c, char& uc);
     void viewOpenTickets();
     void viewClosedTickets();
     void updateOpenTickets();

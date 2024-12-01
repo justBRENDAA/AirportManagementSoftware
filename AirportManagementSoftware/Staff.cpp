@@ -34,7 +34,7 @@ void Staff::displayOptions()
                 std::cout << "Please select a valid option(1-5): ";
         } while (getChoice() == -1);
 
-        handleChoice(getChoice());
+        handleChoice(getChoice(), userContinue);
 
         if (getChoice() == 5) {
             exitProgram = true;
@@ -54,7 +54,7 @@ void Staff::displayOptions()
         std::cout << "Logging out. . .\n";
 }
 
-void Staff::handleChoice(int c)
+void Staff::handleChoice(int c, char& uc)
 {
     if (choice == 1) {
         viewOpenTickets();
@@ -71,7 +71,8 @@ void Staff::handleChoice(int c)
         viewFlightInformationReport();
     }
     else if (choice == 5) {
-        // std::cout << "\nLogging out . . . \n";
+        //std::cout << "\nLogging out . . . \n";
+        uc = 'N';
     }
 }
 

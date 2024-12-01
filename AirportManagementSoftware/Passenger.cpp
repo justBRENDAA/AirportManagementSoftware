@@ -85,14 +85,14 @@ void Passenger::checkFlightInformation()
 {
     Flight flight(con, username);
     flight.displayInfo();
-    std::cout << "\nFlight info displayed successfully\n\n";
+    // debug line std::cout << "\nFlight info displayed successfully\n\n";
 }
 
 void Passenger::luggageInformation()
 {
     Luggage luggage(con, username);
     luggage.displayInfo();
-    std::cout << "\nLuggage info successfully diplayed\n\n";
+    // debug line std::cout << "\nLuggage info successfully diplayed\n\n";
 }
 
 void Passenger::requestSupport()
